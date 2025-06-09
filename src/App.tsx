@@ -1,9 +1,7 @@
 import React from 'react';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { Button, Input, Typography, Icon } from './components/atoms';
-import { Card } from './components/molecules/Card';
-import { FormField } from './components/molecules/FormField';
-import { SearchBox } from './components/molecules/SearchBox';
+import { Card, FormField, SearchBox } from './components/molecules';
 import './styles/globals.css';
 
 // Componente interno para usar o useTheme
