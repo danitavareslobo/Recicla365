@@ -9,6 +9,7 @@ interface TypographyProps {
   align?: 'left' | 'center' | 'right';
   weight?: 'light' | 'normal' | 'medium' | 'semibold' | 'bold';
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export const Typography: React.FC<TypographyProps> = ({
