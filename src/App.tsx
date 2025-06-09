@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Button, Typography, Icon } from './components/atoms';
-import { Header, Navigation, LoginForm } from './components/organisms';
+import { Header, Navigation, LoginForm, DashboardStats, CollectionPointsList } from './components/organisms';
 import './styles/globals.css';
 
 const AppContent: React.FC = () => {
@@ -118,6 +118,44 @@ const AppContent: React.FC = () => {
             <LoginForm 
               onRegisterClick={() => alert('Clicou em Criar conta!')}
             />
+          </div>
+        )}
+
+        {isAuthenticated && (
+          <div style={{ 
+            marginTop: '2rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2rem'
+          }}>
+            <div style={{ 
+              padding: '1.5rem', 
+              backgroundColor: 'var(--bg-secondary)', 
+              borderRadius: 'var(--radius-md)',
+              border: '1px solid var(--border)'
+            }}>
+              <Typography variant="h3" style={{ marginBottom: '1rem' }} align="center">
+                Teste do DashboardStats
+              </Typography>
+              <DashboardStats />
+            </div>
+
+            <div style={{ 
+              padding: '1.5rem', 
+              backgroundColor: 'var(--bg-secondary)', 
+              borderRadius: 'var(--radius-md)',
+              border: '1px solid var(--border)'
+            }}>
+              <Typography variant="h3" style={{ marginBottom: '1rem' }} align="center">
+                Teste do CollectionPointsList
+              </Typography>
+              <CollectionPointsList 
+                onView={(point) => alert(`Ver ponto: ${point.name}`)}
+                onEdit={(point) => alert(`Editar ponto: ${point.name}`)}
+                onDelete={(point) => alert(`Excluir ponto: ${point.name}`)}
+                onCreate={() => alert('Criar novo ponto!')}
+              />
+            </div>
           </div>
         )}
       </div>
