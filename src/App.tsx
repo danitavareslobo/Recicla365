@@ -1,9 +1,6 @@
 import React from 'react';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
-import { Button } from './components/atoms/Button';
-import { Input } from './components/atoms/Input';
-import { Typography } from './components/atoms/Typography';
-import { Icon } from './components/atoms/Icon';
+import { Button, Input, Typography, Icon } from './components/atoms';
 import './styles/globals.css';
 
 const AppContent: React.FC = () => {
