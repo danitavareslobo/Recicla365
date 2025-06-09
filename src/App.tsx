@@ -2,6 +2,7 @@ import React from 'react';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { Button, Input, Typography, Icon } from './components/atoms';
 import { Card } from './components/molecules/Card';
+import { FormField } from './components/molecules/FormField';
 import './styles/globals.css';
 
 const AppContent: React.FC = () => {
@@ -17,6 +18,59 @@ const AppContent: React.FC = () => {
           <Icon name={theme === 'light' ? 'moon' : 'sun'} size="sm" />
           Alternar Tema
         </Button>
+      </div>
+
+      <div style={{ marginBottom: '2rem' }}>
+        <Typography variant="h2">Teste do Componente FormField</Typography>
+        
+        <div style={{ display: 'grid', gap: '1rem', maxWidth: '500px', gridTemplateColumns: '1fr' }}>
+          <FormField 
+            label="Nome completo" 
+            placeholder="Digite seu nome completo"
+            icon="user"
+            required
+            helperText="Informe seu nome como aparece no documento"
+          />
+          
+          <FormField 
+            label="Email" 
+            type="email"
+            placeholder="seuemail@exemplo.com"
+            icon="email"
+            required
+          />
+          
+          <FormField 
+            label="Senha" 
+            type="password"
+            placeholder="Crie uma senha segura"
+            icon="password"
+            required
+            helperText="Mínimo 8 caracteres"
+          />
+          
+          <FormField 
+            label="CEP" 
+            placeholder="00000-000"
+            icon="location"
+            helperText="Será usado para buscar seu endereço"
+          />
+          
+          <FormField 
+            label="Campo com erro" 
+            placeholder="Campo inválido"
+            error
+            errorMessage="Este campo é obrigatório"
+            required
+          />
+          
+          <FormField 
+            label="Campo desabilitado" 
+            placeholder="Não editável"
+            disabled
+            value="Valor fixo"
+          />
+        </div>
       </div>
 
       <div style={{ marginBottom: '2rem' }}>
