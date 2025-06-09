@@ -3,6 +3,7 @@ import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { Button } from './components/atoms/Button';
 import { Input } from './components/atoms/Input';
 import { Typography } from './components/atoms/Typography';
+import { Icon } from './components/atoms/Icon';
 import './styles/globals.css';
 
 const AppContent: React.FC = () => {
@@ -15,8 +16,34 @@ const AppContent: React.FC = () => {
       <div style={{ marginBottom: '2rem' }}>
         <Typography variant="h2">Tema atual: {theme === 'light' ? 'Claro' : 'Escuro'}</Typography>
         <Button onClick={toggleTheme} variant="outline">
+          <Icon name={theme === 'light' ? 'moon' : 'sun'} size="sm" />
           Alternar Tema
         </Button>
+      </div>
+
+      <div style={{ marginBottom: '2rem' }}>
+        <Typography variant="h2">Teste do Componente Icon</Typography>
+        
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap' }}>
+          <Icon name="sun" size="sm" />
+          <Icon name="moon" size="md" />
+          <Icon name="user" size="lg" />
+          <Icon name="recycle" size="xl" />
+        </div>
+
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap' }}>
+          <Icon name="email" color="primary" />
+          <Icon name="location" color="secondary" />
+          <Icon name="search" color="accent" />
+          <Icon name="trash" color="error" />
+          <Icon name="edit" color="success" />
+        </div>
+
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap' }}>
+          <Icon name="plus" onClick={() => alert('Ícone clicado!')} />
+          <Icon name="menu" onClick={() => alert('Menu clicado!')} />
+          <Icon name="close" onClick={() => alert('Fechar clicado!')} />
+        </div>
       </div>
 
       <div style={{ marginBottom: '2rem' }}>
