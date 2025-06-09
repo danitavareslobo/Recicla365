@@ -206,7 +206,6 @@ export const Login: React.FC = () => {
                   onClick={() => navigate('/cadastro')}
                   disabled={isLoading}
                 >
-                  <Icon name="plus" size="sm" />
                   Criar conta
                 </Button>
               </div>

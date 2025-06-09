@@ -6,6 +6,7 @@ import { Button, Typography, Icon } from './components/atoms';
 import { DashboardStats, CollectionPointsList } from './components/organisms';
 import { DashboardTemplate } from './components/templates';
 import { Login } from './pages/Login';
+import { Register } from './pages/Register/Register'; // Página que vamos criar
 import './styles/globals.css';
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -80,6 +81,15 @@ const AppContent: React.FC = () => {
         element={
           <PublicRoute>
             <Login />
+          </PublicRoute>
+        } 
+      />
+      
+      <Route 
+        path="/cadastro" 
+        element={
+          <PublicRoute>
+            <Register />
           </PublicRoute>
         } 
       />
