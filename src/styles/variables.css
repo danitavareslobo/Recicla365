@@ -1,12 +1,12 @@
 :root {
   /* Cores do Tema Claro (Verde) */
-  --bg-primary-light: #f0fdf4;
-  --bg-secondary-light: #dcfce7;
+  --bg-primary-light: #dbfce5;
+  --bg-secondary-light: #baf8cf;
   --text-primary-light: #14532d;
   --text-secondary-light: #166534;
   --accent-light: #16a34a;
   --accent-hover-light: #15803d;
-  --border-light: #bbf7d0;
+  --border-light: #7dfaa9;
   --shadow-light: rgba(34, 197, 94, 0.1);
 
   /* Cores do Tema Escuro */

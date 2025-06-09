@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { Button } from './components/atoms/Button';
+import { Input } from './components/atoms/Input';
 import './styles/globals.css';
 
 const AppContent: React.FC = () => {
@@ -15,6 +16,26 @@ const AppContent: React.FC = () => {
         <Button onClick={toggleTheme} variant="outline">
           Alternar Tema
         </Button>
+      </div>
+
+      <div style={{ marginBottom: '2rem' }}>
+        <h2>Teste do Componente Input</h2>
+        
+        <div style={{ display: 'grid', gap: '1rem', maxWidth: '400px' }}>
+          <Input label="Nome" placeholder="Digite seu nome" />
+          <Input label="Email" type="email" placeholder="seuemail@exemplo.com" required />
+          <Input label="Senha" type="password" placeholder="Sua senha" />
+          <Input label="Data de Nascimento" type="date" />
+          <Input label="Telefone" type="tel" placeholder="(11) 99999-9999" />
+          <Input 
+            label="Campo com erro" 
+            placeholder="Campo inválido" 
+            error 
+            errorMessage="Este campo é obrigatório" 
+          />
+          <Input label="Campo desabilitado" placeholder="Não editável" disabled />
+          <Input placeholder="Input sem label" fullWidth />
+        </div>
       </div>
 
       <div style={{ marginBottom: '2rem' }}>
