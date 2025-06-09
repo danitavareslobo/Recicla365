@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Button, Typography, Icon } from './components/atoms';
-import { Header, Navigation } from './components/organisms';
+import { Header, Navigation, LoginForm } from './components/organisms';
 import './styles/globals.css';
 
 const AppContent: React.FC = () => {
@@ -93,16 +93,33 @@ const AppContent: React.FC = () => {
             </li>
             <li>
               <Typography variant="body1" style={{ marginBottom: '0.5rem' }}>
-                <strong>Responsividade:</strong> Redimensione a janela para ver adaptações mobile
+                <strong>LoginForm:</strong> Use o formulário abaixo ou o botão "Simular Login"
               </Typography>
             </li>
             <li>
               <Typography variant="body1" style={{ marginBottom: '0.5rem' }}>
-                <strong>Tema:</strong> Alterne entre claro/escuro e veja as transições suaves
+                <strong>Responsividade:</strong> Redimensione a janela para ver adaptações mobile
               </Typography>
             </li>
           </ul>
         </div>
+
+        {!isAuthenticated && (
+          <div style={{ 
+            marginTop: '2rem',
+            padding: '1.5rem', 
+            backgroundColor: 'var(--bg-secondary)', 
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--border)'
+          }}>
+            <Typography variant="h3" style={{ marginBottom: '1rem' }} align="center">
+              Teste do LoginForm
+            </Typography>
+            <LoginForm 
+              onRegisterClick={() => alert('Clicou em Criar conta!')}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
