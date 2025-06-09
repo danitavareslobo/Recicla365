@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { Button, Input, Typography, Icon } from './components/atoms';
+import { Card } from './components/molecules/Card';
 import './styles/globals.css';
 
 const AppContent: React.FC = () => {
@@ -16,6 +17,51 @@ const AppContent: React.FC = () => {
           <Icon name={theme === 'light' ? 'moon' : 'sun'} size="sm" />
           Alternar Tema
         </Button>
+      </div>
+
+      <div style={{ marginBottom: '2rem' }}>
+        <Typography variant="h2">Teste do Componente Card</Typography>
+        
+        <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
+          <Card 
+            title="Card Básico" 
+            subtitle="Este é um card simples"
+            icon="recycle"
+          >
+            <Typography variant="body1">
+              Conteúdo do card aqui. Pode ter qualquer coisa dentro.
+            </Typography>
+          </Card>
+          
+          <Card 
+            title="Card Estatísticas" 
+            variant="stats"
+            icon="user"
+            clickable
+            onClick={() => alert('Card clicado!')}
+          >
+            <Typography variant="h2" color="accent">150</Typography>
+            <Typography variant="body2" color="secondary">Usuários ativos</Typography>
+          </Card>
+          
+          <Card 
+            title="Card Destaque" 
+            subtitle="Card com destaque especial"
+            variant="highlight"
+            icon="location"
+          >
+            <Typography variant="body1">
+              Este card tem um estilo destacado para informações importantes.
+            </Typography>
+          </Card>
+          
+          <Card clickable onClick={() => alert('Card sem header!')}>
+            <Typography variant="h5">Card sem Header</Typography>
+            <Typography variant="body2" color="secondary">
+              Este card não tem título nem ícone, apenas conteúdo.
+            </Typography>
+          </Card>
+        </div>
       </div>
 
       <div style={{ marginBottom: '2rem' }}>
