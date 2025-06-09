@@ -2,6 +2,7 @@ import React from 'react';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { Button } from './components/atoms/Button';
 import { Input } from './components/atoms/Input';
+import { Typography } from './components/atoms/Typography';
 import './styles/globals.css';
 
 const AppContent: React.FC = () => {
@@ -9,13 +10,47 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="container" style={{ padding: '2rem' }}>
-      <h1>Recicla365 - Teste de Componentes</h1>
+      <Typography variant="h1" align="center">Recicla365 - Teste de Componentes</Typography>
       
       <div style={{ marginBottom: '2rem' }}>
-        <h2>Tema atual: {theme === 'light' ? 'Claro' : 'Escuro'}</h2>
+        <Typography variant="h2">Tema atual: {theme === 'light' ? 'Claro' : 'Escuro'}</Typography>
         <Button onClick={toggleTheme} variant="outline">
           Alternar Tema
         </Button>
+      </div>
+
+      <div style={{ marginBottom: '2rem' }}>
+        <Typography variant="h2">Teste do Componente Typography</Typography>
+        
+        <div style={{ marginBottom: '1rem' }}>
+          <Typography variant="h1">Heading 1</Typography>
+          <Typography variant="h2">Heading 2</Typography>
+          <Typography variant="h3">Heading 3</Typography>
+          <Typography variant="h4">Heading 4</Typography>
+          <Typography variant="h5">Heading 5</Typography>
+          <Typography variant="h6">Heading 6</Typography>
+        </div>
+
+        <div style={{ marginBottom: '1rem' }}>
+          <Typography variant="body1">Body 1 - Lorem ipsum dolor sit amet consectetur adipisicing elit.</Typography>
+          <Typography variant="body2">Body 2 - Texto menor para descrições e detalhes.</Typography>
+          <Typography variant="caption">Caption - Texto muito pequeno para legendas.</Typography>
+          <Typography variant="overline">Overline - Texto em maiúsculas</Typography>
+        </div>
+
+        <div style={{ marginBottom: '1rem' }}>
+          <Typography variant="body1" color="primary">Cor primary</Typography>
+          <Typography variant="body1" color="secondary">Cor secondary</Typography>
+          <Typography variant="body1" color="accent">Cor accent</Typography>
+          <Typography variant="body1" color="error">Cor error</Typography>
+          <Typography variant="body1" color="success">Cor success</Typography>
+        </div>
+
+        <div style={{ marginBottom: '1rem' }}>
+          <Typography variant="body1" align="left">Alinhado à esquerda</Typography>
+          <Typography variant="body1" align="center">Alinhado ao centro</Typography>
+          <Typography variant="body1" align="right">Alinhado à direita</Typography>
+        </div>
       </div>
 
       <div style={{ marginBottom: '2rem' }}>
