@@ -1,13 +1,13 @@
 :root {
-  /* Cores do Tema Claro */
-  --bg-primary-light: #ffffff;
-  --bg-secondary-light: #f8f9fa;
-  --text-primary-light: #212529;
-  --text-secondary-light: #6c757d;
-  --accent-light: #28a745;
-  --accent-hover-light: #218838;
-  --border-light: #dee2e6;
-  --shadow-light: rgba(0, 0, 0, 0.1);
+  /* Cores do Tema Claro (Verde) */
+  --bg-primary-light: #dbfce5;
+  --bg-secondary-light: #baf8cf;
+  --text-primary-light: #14532d;
+  --text-secondary-light: #166534;
+  --accent-light: #16a34a;
+  --accent-hover-light: #15803d;
+  --border-light: #7dfaa9;
+  --shadow-light: rgba(34, 197, 94, 0.1);
 
   /* Cores do Tema Escuro */
   --bg-primary-dark: #1a1a1a;

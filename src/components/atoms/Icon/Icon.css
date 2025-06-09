@@ -1,0 +1,59 @@
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.icon--sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+.icon--md {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.icon--lg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.icon--xl {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.icon--primary {
+  color: var(--text-primary);
+}
+
+.icon--secondary {
+  color: var(--text-secondary);
+}
+
+.icon--accent {
+  color: var(--accent);
+}
+
+.icon--white {
+  color: white;
+}
+
+.icon--error {
+  color: #dc3545;
+}
+
+.icon--success {
+  color: var(--accent);
+}
+
+.icon--clickable {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.icon--clickable:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
