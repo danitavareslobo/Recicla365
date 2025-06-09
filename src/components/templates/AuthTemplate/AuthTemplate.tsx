@@ -88,7 +88,7 @@ export const AuthTemplate: React.FC<AuthTemplateProps> = ({
 
       <footer className="auth-template__footer">
         <Typography variant="caption" color="secondary" align="center">
-          © 2024 Recicla365. Construindo um futuro mais sustentável.
+          © 2025 Recicla365. Construindo um futuro mais sustentável. Criado por <a href='https://www.linkedin.com/in/danitavareslobo/' target="_blank">Daniele Tavares Lobo</a>
         </Typography>
       </footer>
     </div>

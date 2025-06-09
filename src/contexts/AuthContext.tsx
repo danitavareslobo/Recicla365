@@ -1,5 +1,7 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { User, AuthContextType } from '../types/index';
+import { localStorage } from '../utils';
+import { validateUserCredentials, getUserWithoutPassword } from '../data';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -18,45 +20,63 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
+  useEffect(() => {
+    const initializeAuth = () => {
+      const storedUser = localStorage.getUser();
+      if (storedUser) {
+        setUser(storedUser as User);
+      }
+    };
+
+    initializeAuth();
+  }, []);
+
   const login = async (email: string, password: string): Promise<boolean> => {
-    if (email && password) {
-      const mockUser: User = {
-        id: '1',
-        name: 'João da Silva',
-        email: email,
-        cpf: '123.456.789-00',
-        gender: 'M',
-        birthDate: '1990-01-01',
-        password: '',
-        address: {
-          cep: '88000-000',
-          street: 'Rua das Flores',
-          number: '123',
-          neighborhood: 'Centro',
-          city: 'Florianópolis',
-          state: 'Santa Catarina',
-          uf: 'SC',
-        },
-        createdAt: new Date().toISOString(),
-      };
-      setUser(mockUser);
-      return true;
+    try {
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      const validatedUser = validateUserCredentials(email, password);
+      
+      if (validatedUser) {
+        const userWithoutPassword = getUserWithoutPassword(validatedUser);
+        
+        localStorage.setUser(userWithoutPassword);
+        localStorage.setToken(`token_${validatedUser.id}_${Date.now()}`);
+        
+        setUser(userWithoutPassword as User);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error('Erro no login:', error);
+      return false;
     }
-    return false;
   };
 
   const logout = () => {
+    localStorage.clear();
     setUser(null);
   };
 
   const register = async (userData: Omit<User, 'id' | 'createdAt'>): Promise<boolean> => {
-    const newUser: User = {
-      ...userData,
-      id: Date.now().toString(),
-      createdAt: new Date().toISOString(),
-    };
-    setUser(newUser);
-    return true;
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      const newUser: User = {
+        ...userData,
+        id: Date.now().toString(),
+        createdAt: new Date().toISOString(),
+      };
+
+      const userWithoutPassword = getUserWithoutPassword(newUser);
+      localStorage.setUser(userWithoutPassword);
+      setUser(newUser);
+      return true;
+    } catch (error) {
+      console.error('Erro no registro:', error);
+      return false;
+    }
   };
 
   const isAuthenticated = !!user;
