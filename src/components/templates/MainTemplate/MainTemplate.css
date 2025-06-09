@@ -1,0 +1,206 @@
+.main-template {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  position: relative;
+}
+
+.main-template__container {
+  width: 100%;
+  min-height: inherit;
+}
+
+.main-template--default .main-template__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.main-template--centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+}
+
+.main-template--centered .main-template__container {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.main-template--fullscreen .main-template__container {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
+
+.main-template__scroll-to-top {
+  position: fixed;
+  bottom: var(--spacing-xl);
+  right: var(--spacing-xl);
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+.main-template__scroll-to-top:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.main-template__scroll-to-top:active {
+  transform: translateY(0);
+}
+
+.main-template__scroll-to-top svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.2s ease;
+}
+
+.main-template__scroll-to-top:hover svg {
+  transform: scale(1.1);
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1200px) {
+  .main-template--default .main-template__container {
+    max-width: 100%;
+    padding: 0 var(--spacing-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .main-template--default .main-template__container {
+    padding: 0 var(--spacing-md);
+  }
+
+  .main-template--centered {
+    padding: var(--spacing-md);
+  }
+
+  .main-template--centered .main-template__container {
+    max-width: 100%;
+  }
+
+  .main-template__scroll-to-top {
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .main-template__scroll-to-top svg {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-template--default .main-template__container {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .main-template--centered {
+    padding: var(--spacing-sm);
+  }
+
+  .main-template__scroll-to-top {
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+}
+
+.main-template__scroll-to-top:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-contrast: high) {
+  .main-template__scroll-to-top {
+    border: 2px solid currentColor;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-template__scroll-to-top {
+    transition: none;
+    animation: none;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .main-template__scroll-to-top:hover {
+    transform: none;
+  }
+
+  .main-template__scroll-to-top svg {
+    transition: none;
+  }
+
+  .main-template__scroll-to-top:hover svg {
+    transform: none;
+  }
+}
+
+@media print {
+  .main-template__scroll-to-top {
+    display: none;
+  }
+
+  .main-template--default .main-template__container,
+  .main-template--centered .main-template__container {
+    max-width: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+[data-theme="dark"] .main-template__scroll-to-top {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .main-template__scroll-to-top:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.main-template::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main-template::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+.main-template::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.main-template::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
