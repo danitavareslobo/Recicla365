@@ -3,8 +3,10 @@ import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { Button, Input, Typography, Icon } from './components/atoms';
 import { Card } from './components/molecules/Card';
 import { FormField } from './components/molecules/FormField';
+import { SearchBox } from './components/molecules/SearchBox';
 import './styles/globals.css';
 
+// Componente interno para usar o useTheme
 const AppContent: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
 
@@ -18,6 +20,31 @@ const AppContent: React.FC = () => {
           <Icon name={theme === 'light' ? 'moon' : 'sun'} size="sm" />
           Alternar Tema
         </Button>
+      </div>
+
+      <div style={{ marginBottom: '2rem' }}>
+        <Typography variant="h2">Teste do Componente SearchBox</Typography>
+        
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '600px' }}>
+          <SearchBox 
+            placeholder="Buscar pontos de coleta..."
+            onSearch={(term) => alert(`Buscando por: ${term}`)}
+            onClear={() => alert('Busca limpa!')}
+            onChange={(value) => console.log('Valor:', value)}
+            fullWidth
+          />
+          
+          <SearchBox 
+            placeholder="Busca compacta"
+            onSearch={(term) => alert(`Busca: ${term}`)}
+          />
+          
+          <SearchBox 
+            placeholder="Busca desabilitada"
+            disabled
+            onSearch={() => {}}
+          />
+        </div>
       </div>
 
       <div style={{ marginBottom: '2rem' }}>
