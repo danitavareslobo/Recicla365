@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Typography, Button, Icon } from '../../components/atoms';
+import { Typography, Icon } from '../../components/atoms';
 import { DashboardStats, CollectionPointsList } from '../../components/organisms';
 import { DashboardTemplate } from '../../components/templates';
 import { useAuth } from '../../contexts/AuthContext';
@@ -72,18 +72,6 @@ export const Dashboard: React.FC = () => {
               Aqui você pode acompanhar suas estatísticas e gerenciar pontos de coleta.
             </Typography>
           </div>
-
-          <div className="dashboard__quick-actions">
-            <Button
-              variant="primary"
-              size="md"
-              onClick={handleCreatePoint}
-              className="dashboard__cta-button"
-            >
-              <Icon name="plus" size="sm" />
-              Cadastrar Ponto
-            </Button>
-          </div>
         </header>
 
         <section className="dashboard__stats-section">
@@ -91,21 +79,6 @@ export const Dashboard: React.FC = () => {
         </section>
 
         <section className="dashboard__points-section">
-          <div className="dashboard__section-header">
-            <Typography variant="h2" className="dashboard__section-title">
-              Pontos de Coleta Recentes
-            </Typography>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => navigate('/collection-points')}
-              className="dashboard__view-all-button"
-            >
-              Ver Todos
-              <Icon name="search" size="sm" />
-            </Button>
-          </div>
-
           <CollectionPointsList
             collectionPoints={collectionPoints.slice(0, 6)}
             onView={undefined}
