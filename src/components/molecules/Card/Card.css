@@ -5,6 +5,9 @@
   padding: var(--spacing-lg);
   box-shadow: 0 2px 4px var(--shadow);
   transition: all 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .card--clickable {
@@ -36,6 +39,7 @@
   align-items: flex-start;
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-md);
+  flex-shrink: 0;
 }
 
 .card__icon {
@@ -46,6 +50,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .card__title-section {
@@ -55,18 +60,34 @@
 
 .card__title {
   margin-bottom: var(--spacing-xs);
+  font-weight: 600;
+  line-height: 1.3;
+  word-wrap: break-word;
 }
 
 .card__subtitle {
   margin: 0;
+  line-height: 1.4;
+  word-wrap: break-word;
 }
 
 .card__content {
-  
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:not(:has(.card__header)) .card__content {
-  
+  flex: 1;
+}
+
+.card--stats:hover .card__icon {
+  background-color: var(--accent);
+  transform: scale(1.05);
+}
+
+.card--stats:hover .card__icon svg {
+  color: white;
 }
 
 @media (max-width: 768px) {
@@ -81,5 +102,70 @@
   
   .card__icon {
     padding: var(--spacing-xs);
+  }
+  
+  .card__title {
+    font-size: var(--font-size-base);
+  }
+  
+  .card__subtitle {
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: var(--spacing-sm);
+  }
+  
+  .card__header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--spacing-sm);
+  }
+  
+  .card__icon {
+    align-self: center;
+  }
+}
+
+.card:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-contrast: high) {
+  .card {
+    border-width: 2px;
+  }
+  
+  .card--highlight {
+    border-width: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card__icon {
+    transition: none;
+  }
+  
+  .card--clickable:hover,
+  .card--stats:hover .card__icon {
+    transform: none;
+  }
+}
+
+@media print {
+  .card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .card--clickable:hover {
+    transform: none;
+    box-shadow: none;
   }
 }
