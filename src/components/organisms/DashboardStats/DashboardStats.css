@@ -23,11 +23,16 @@
 .dashboard-stats__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-auto-rows: 1fr;
   gap: var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
 }
 
 .dashboard-stats__card {
+  height: 100%;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -53,6 +58,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+  flex: 1;
+  justify-content: space-between;
 }
 
 .dashboard-stats__value-section {
@@ -60,6 +67,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: var(--spacing-md);
+  flex-wrap: wrap;
 }
 
 .dashboard-stats__value {
@@ -67,6 +75,8 @@
   line-height: 1;
   letter-spacing: -0.02em;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 120px;
 }
 
 .dashboard-stats__trend {
@@ -78,6 +88,8 @@
   background-color: var(--bg-secondary);
   border: 1px solid var(--border);
   transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .dashboard-stats__trend--up {
@@ -98,6 +110,7 @@
 .dashboard-stats__trend-label {
   font-style: italic;
   text-align: right;
+  margin-top: var(--spacing-xs);
 }
 
 .dashboard-stats__footer {
@@ -118,6 +131,7 @@
   flex-direction: column;
   gap: var(--spacing-md);
   animation: pulse 1.5s ease-in-out infinite;
+  min-height: 200px;
 }
 
 .dashboard-stats__skeleton-header,
@@ -173,6 +187,10 @@
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: var(--spacing-md);
   }
+  
+  .dashboard-stats__card {
+    min-height: 180px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -186,8 +204,12 @@
   }
 
   .dashboard-stats__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: var(--spacing-md);
+  }
+  
+  .dashboard-stats__card {
+    min-height: 160px;
   }
 
   .dashboard-stats__value-section {
@@ -219,7 +241,16 @@
   }
 
   .dashboard-stats__grid {
+    grid-template-columns: 1fr;
     gap: var(--spacing-sm);
+  }
+  
+  .dashboard-stats__card {
+    min-height: 140px;
+  }
+
+  .dashboard-stats__skeleton {
+    min-height: 140px;
   }
 }
 

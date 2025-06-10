@@ -1,12 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ThemeProvider, useTheme } from './contexts/ThemeContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { Button, Typography, Icon } from './components/atoms';
-import { DashboardStats, CollectionPointsList } from './components/organisms';
-import { DashboardTemplate } from './components/templates';
-import { Login } from './pages/Login';
-import { Register } from './pages/Register'; 
+import { Login, Register, Dashboard } from './pages';
 import './styles/globals.css';
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -17,60 +13,6 @@ const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
   return !isAuthenticated ? <>{children}</> : <Navigate to="/dashboard" replace />;
-};
-
-const Dashboard: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
-  const { user, logout } = useAuth();
-
-  const handleLogout = () => {
-    logout();
-  };
-
-  return (
-    <DashboardTemplate>
-      <div style={{ marginBottom: '2rem' }}>
-        <Typography variant="h1" style={{ marginBottom: '1rem' }}>
-          Dashboard do Recicla365
-        </Typography>
-        
-        <div style={{ 
-          display: 'flex', 
-          gap: '1rem', 
-          marginBottom: '1rem',
-          flexWrap: 'wrap',
-          alignItems: 'center'
-        }}>
-          <Button onClick={handleLogout} variant="outline">
-            <Icon name="close" size="sm" />
-            Logout
-          </Button>
-          
-          <Button onClick={toggleTheme} variant="outline">
-            <Icon name={theme === 'light' ? 'moon' : 'sun'} size="sm" />
-            Tema {theme === 'light' ? 'Escuro' : 'Claro'}
-          </Button>
-        </div>
-        
-        <Typography variant="body1" color="secondary">
-          Logado como: <strong>{user?.name || 'Usuário'}</strong>
-        </Typography>
-      </div>
-
-      <div style={{ marginBottom: '2rem' }}>
-        <DashboardStats />
-      </div>
-
-      <div>
-        <CollectionPointsList 
-          onView={(point) => alert(`Ver ponto: ${point.name}`)}
-          onEdit={(point) => alert(`Editar ponto: ${point.name}`)}
-          onDelete={(point) => alert(`Excluir ponto: ${point.name}`)}
-          onCreate={() => alert('Criar novo ponto!')}
-        />
-      </div>
-    </DashboardTemplate>
-  );
 };
 
 const App: React.FC = () => {
@@ -87,6 +29,7 @@ const App: React.FC = () => {
                 </PublicRoute>
               } 
             />
+            
             <Route 
               path="/cadastro" 
               element={
@@ -95,6 +38,7 @@ const App: React.FC = () => {
                 </PublicRoute>
               } 
             />
+            
             <Route 
               path="/dashboard" 
               element={
@@ -103,7 +47,19 @@ const App: React.FC = () => {
                 </PrivateRoute>
               } 
             />
+                        
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            
+            <Route 
+              path="*" 
+              element={
+                <div style={{ padding: '2rem', textAlign: 'center' }}>
+                  <h2>Página não encontrada</h2>
+                  <p>A página que você está procurando não existe.</p>
+                  <a href="/dashboard">Voltar ao Dashboard</a>
+                </div>
+              } 
+            />
           </Routes>
         </AuthProvider>
       </ThemeProvider>

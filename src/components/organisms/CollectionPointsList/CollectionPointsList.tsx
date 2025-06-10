@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Typography, Icon } from '../../atoms';
 import { Card, SearchBox } from '../../molecules';
 import type { CollectionPoint, WasteType } from '../../../types';
@@ -16,74 +16,8 @@ interface CollectionPointsListProps {
   onCreate?: () => void;
 }
 
-const mockCollectionPoints: CollectionPoint[] = [
-  {
-    id: '1',
-    name: 'EcoPonto Centro',
-    description: 'Ponto de coleta no centro da cidade, aceita diversos tipos de materiais recicláveis.',
-    userId: 'user1',
-    address: {
-      cep: '88010-000',
-      street: 'Rua Felipe Schmidt',
-      number: '123',
-      neighborhood: 'Centro',
-      city: 'Florianópolis',
-      state: 'Santa Catarina',
-      uf: 'SC',
-    },
-    coordinates: {
-      latitude: -27.5954,
-      longitude: -48.5480,
-    },
-    acceptedWastes: ['Papel', 'Plástico', 'Metal', 'Vidro'],
-    createdAt: '2024-01-15T10:00:00Z',
-  },
-  {
-    id: '2',
-    name: 'Recicla Trindade',
-    description: 'Especializado em eletrônicos e baterias. Horário de funcionamento: 8h às 18h.',
-    userId: 'user2',
-    address: {
-      cep: '88040-000',
-      street: 'Rua Lauro Linhares',
-      number: '456',
-      neighborhood: 'Trindade',
-      city: 'Florianópolis',
-      state: 'Santa Catarina',
-      uf: 'SC',
-    },
-    coordinates: {
-      latitude: -27.6011,
-      longitude: -48.5200,
-    },
-    acceptedWastes: ['Eletrônicos', 'Baterias'],
-    createdAt: '2024-02-20T14:30:00Z',
-  },
-  {
-    id: '3',
-    name: 'Verde Lagoa',
-    description: 'Foco em materiais orgânicos e compostagem. Programa educativo disponível.',
-    userId: 'user3',
-    address: {
-      cep: '88062-000',
-      street: 'Avenida das Rendeiras',
-      number: '789',
-      neighborhood: 'Lagoa da Conceição',
-      city: 'Florianópolis',
-      state: 'Santa Catarina',
-      uf: 'SC',
-    },
-    coordinates: {
-      latitude: -27.6139,
-      longitude: -48.4623,
-    },
-    acceptedWastes: ['Orgânico', 'Papel'],
-    createdAt: '2024-03-10T09:15:00Z',
-  },
-];
-
 export const CollectionPointsList: React.FC<CollectionPointsListProps> = ({
-  collectionPoints = mockCollectionPoints,
+  collectionPoints = [],
   isLoading = false,
   showActions = true,
   searchable = true,
@@ -94,7 +28,15 @@ export const CollectionPointsList: React.FC<CollectionPointsListProps> = ({
   onCreate,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredPoints, setFilteredPoints] = useState(collectionPoints);
+  const [filteredPoints, setFilteredPoints] = useState<CollectionPoint[]>(collectionPoints);
+
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setFilteredPoints(collectionPoints);
+    } else {
+      handleSearch(searchTerm);
+    }
+  }, [collectionPoints, searchTerm]);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -193,17 +135,6 @@ export const CollectionPointsList: React.FC<CollectionPointsListProps> = ({
               onChange={setSearchTerm}
               className="collection-points-list__search"
             />
-          )}
-
-          {onCreate && (
-            <Button
-              variant="primary"
-              onClick={onCreate}
-              className="collection-points-list__create-button"
-            >
-              <Icon name="plus" size="sm" />
-              Novo Ponto
-            </Button>
           )}
         </div>
       </div>
