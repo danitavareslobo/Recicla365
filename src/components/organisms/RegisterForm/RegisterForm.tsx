@@ -304,16 +304,16 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         </Typography>
       </div>
 
-      <div className="register-form__progress">
-        <div className={`register-form__step ${currentStep >= 1 ? 'register-form__step--active' : ''}`}>
-          <span>1</span>
-          <Typography variant="caption">Dados Pessoais</Typography>
-        </div>
-        <div className={`register-form__step ${currentStep >= 2 ? 'register-form__step--active' : ''}`}>
-          <span>2</span>
-          <Typography variant="caption">Senha e Endereço</Typography>
-        </div>
-      </div>
+      <div className="register-form__progress" data-step={currentStep}>
+  <div className={`register-form__step ${currentStep >= 1 ? 'register-form__step--active' : ''}`}>
+    <span>1</span>
+    <Typography variant="body2" weight="medium">Dados Pessoais</Typography>
+  </div>
+  <div className={`register-form__step ${currentStep >= 2 ? 'register-form__step--active' : ''}`}>
+    <span>2</span>
+    <Typography variant="body2" weight="medium">Senha e Endereço</Typography>
+  </div>
+</div>
 
       <form onSubmit={handleSubmit} className="register-form__form">
         {errors.general && (
@@ -410,7 +410,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               onClick={handleNextStep}
               className="register-form__next"
             >
-              <Icon name="plus" size="sm" />
               Próximo
             </Button>
           </div>
