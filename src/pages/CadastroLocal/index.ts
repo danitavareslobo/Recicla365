@@ -1,0 +1,1 @@
+export { CadastroLocal } from './CadastroLocal';

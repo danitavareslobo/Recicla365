@@ -1,0 +1,28 @@
+.create-collection-point {
+  min-height: calc(100vh - var(--header-height));
+  padding: var(--spacing-xl) var(--spacing-md);
+  background: var(--color-background);
+}
+
+.create-collection-point__container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .create-collection-point {
+    padding: var(--spacing-lg) var(--spacing-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .create-collection-point {
+    padding: var(--spacing-md) var(--spacing-xs);
+  }
+}
+
+/* Dark Theme */
+[data-theme="dark"] .create-collection-point {
+  background: var(--color-background-dark);
+}
