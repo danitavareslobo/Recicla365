@@ -1,28 +1,27 @@
-.create-collection-point {
-  min-height: calc(100vh - var(--header-height));
+.cadastro-local {
+  min-height: calc(100vh - var(--header-height) - var(--navigation-height));
   padding: var(--spacing-xl) var(--spacing-md);
   background: var(--color-background);
 }
 
-.create-collection-point__container {
+.cadastro-local__container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 @media (max-width: 768px) {
-  .create-collection-point {
+  .cadastro-local {
     padding: var(--spacing-lg) var(--spacing-sm);
   }
 }
 
 @media (max-width: 480px) {
-  .create-collection-point {
+  .cadastro-local {
     padding: var(--spacing-md) var(--spacing-xs);
   }
 }
 
-/* Dark Theme */
-[data-theme="dark"] .create-collection-point {
+[data-theme="dark"] .cadastro-local {
   background: var(--color-background-dark);
 }

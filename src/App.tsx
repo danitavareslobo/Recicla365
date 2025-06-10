@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { Login, Register, Dashboard } from './pages';
+import { Login, Register, Dashboard, CadastroLocal } from './pages';
 import './styles/globals.css';
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -44,6 +44,15 @@ const App: React.FC = () => {
               element={
                 <PrivateRoute>
                   <Dashboard />
+                </PrivateRoute>
+              } 
+            />
+
+            <Route 
+              path="/cadastro-local" 
+              element={
+                <PrivateRoute>
+                  <CadastroLocal />
                 </PrivateRoute>
               } 
             />

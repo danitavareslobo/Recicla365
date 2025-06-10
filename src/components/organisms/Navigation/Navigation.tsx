@@ -35,7 +35,7 @@ const navigationItems: NavigationItem[] = [
   {
     id: 'collection-points-create',
     label: 'Cadastrar Ponto',
-    path: '/collection-points/create',
+    path: '/cadastro-local',
     icon: 'plus',
     requiresAuth: true,
   },
@@ -73,6 +73,9 @@ export const Navigation: React.FC<NavigationProps> = ({
   const isActive = (path: string) => {
     if (path === '/dashboard') {
       return location.pathname === '/' || location.pathname === '/dashboard';
+    }
+    if (path === '/cadastro-local') {
+      return location.pathname === '/cadastro-local';
     }
     return location.pathname.startsWith(path);
   };
