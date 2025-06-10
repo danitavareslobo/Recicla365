@@ -1,0 +1,1 @@
+export { CollectionPointForm } from './CollectionPointForm';
