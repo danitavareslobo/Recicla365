@@ -6,7 +6,7 @@ import { Button, Typography, Icon } from './components/atoms';
 import { DashboardStats, CollectionPointsList } from './components/organisms';
 import { DashboardTemplate } from './components/templates';
 import { Login } from './pages/Login';
-import { Register } from './pages/Register/Register'; // Página que vamos criar
+import { Register } from './pages/Register'; 
 import './styles/globals.css';
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -73,60 +73,38 @@ const Dashboard: React.FC = () => {
   );
 };
 
-const AppContent: React.FC = () => {
-  return (
-    <Routes>
-      <Route 
-        path="/login" 
-        element={
-          <PublicRoute>
-            <Login />
-          </PublicRoute>
-        } 
-      />
-      
-      <Route 
-        path="/cadastro" 
-        element={
-          <PublicRoute>
-            <Register />
-          </PublicRoute>
-        } 
-      />
-      
-      <Route 
-        path="/dashboard" 
-        element={
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        } 
-      />
-      
-      <Route 
-        path="/" 
-        element={<AppRouter />} 
-      />
-      
-      <Route 
-        path="*" 
-        element={<Navigate to="/login" replace />} 
-      />
-    </Routes>
-  );
-};
-
-const AppRouter: React.FC = () => {
-  const { isAuthenticated } = useAuth();
-  return <Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />;
-};
-
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <ThemeProvider>
         <AuthProvider>
-          <AppContent />
+          <Routes>
+            <Route 
+              path="/login" 
+              element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+              } 
+            />
+            <Route 
+              path="/cadastro" 
+              element={
+                <PublicRoute>
+                  <Register />
+                </PublicRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard" 
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              } 
+            />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>
