@@ -10,3 +10,12 @@ export {
   mockRegistrationResponses,
   registrationTestCases
 } from './testeRegister';
+
+export {
+  mockCollectionPoints,
+  getCollectionPointById,
+  getCollectionPointsByUserId,
+  getCollectionPointsByWasteType,
+  getCollectionPointsByCity,
+  getRecentCollectionPoints
+} from './collectionPoints';
