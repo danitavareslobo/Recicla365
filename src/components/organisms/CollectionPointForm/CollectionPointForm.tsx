@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Typography, Icon } from '../../atoms';
 import { FormField } from '../../molecules';
 import { useAuth } from '../../../contexts/AuthContext';
-import { ViaCepService } from '../../../services';
+import { ViaCepService, ValidationService, CollectionPointService } from '../../../services';
 import type { CollectionPoint, WasteType, CollectionPointFormData, WasteTypeOption } from '../../../types';
 import './CollectionPointForm.css';
 
@@ -47,9 +47,47 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
     acceptedWastes: initialData?.acceptedWastes || [],
   });
 
-  const [errors, setErrors] = useState<Partial<Record<keyof CollectionPointFormData, string>>>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingCep, setIsLoadingCep] = useState(false);
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [saveSuccess, setSaveSuccess] = useState(false);
+
+  useEffect(() => {
+    if (isEditing && initialData?.id) {
+      loadCollectionPointData(initialData.id);
+    }
+  }, [isEditing, initialData?.id]);
+
+  const loadCollectionPointData = async (id: string) => {
+    try {
+      setIsLoading(true);
+      const point = await CollectionPointService.getCollectionPointById(id);
+      
+      if (point) {
+        setFormData({
+          name: point.name,
+          description: point.description,
+          cep: point.address.cep,
+          street: point.address.street,
+          number: point.address.number,
+          complement: point.address.complement || '',
+          neighborhood: point.address.neighborhood,
+          city: point.address.city,
+          state: point.address.state,
+          latitude: point.coordinates.latitude.toString(),
+          longitude: point.coordinates.longitude.toString(),
+          acceptedWastes: point.acceptedWastes,
+        });
+      }
+    } catch (error) {
+      setErrors({
+        general: 'Erro ao carregar dados do ponto de coleta',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleInputChange = (field: keyof CollectionPointFormData) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -58,6 +96,10 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
 
     if (field === 'cep') {
       value = ViaCepService.maskCep(value);
+    } else if (field === 'number') {
+      value = ValidationService.formatNumber(value);
+    } else if (field === 'name' || field === 'street' || field === 'neighborhood' || field === 'city') {
+      value = ValidationService.sanitizeText(value);
     }
 
     setFormData(prev => ({
@@ -65,21 +107,42 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
       [field]: value,
     }));
 
-    if (errors[field]) {
-      setErrors(prev => ({
-        ...prev,
-        [field]: undefined,
-      }));
+    if (touched[field]) {
+      const fieldError = ValidationService.validateField(field, value, formData);
+      if (fieldError) {
+        setErrors(prev => ({
+          ...prev,
+          [field]: fieldError,
+        }));
+      } else {
+        setErrors(prev => {
+          const newErrors = { ...prev };
+          delete newErrors[field];
+          return newErrors;
+        });
+      }
     }
   };
 
-  const handleWasteToggle = (wasteType: WasteType) => {
-    setFormData(prev => ({
+  const handleBlur = (field: keyof CollectionPointFormData) => () => {
+    setTouched(prev => ({
       ...prev,
-      acceptedWastes: prev.acceptedWastes.includes(wasteType)
-        ? prev.acceptedWastes.filter(w => w !== wasteType)
-        : [...prev.acceptedWastes, wasteType],
+      [field]: true,
     }));
+
+    const fieldError = ValidationService.validateField(field, formData[field], formData);
+    if (fieldError) {
+      setErrors(prev => ({
+        ...prev,
+        [field]: fieldError,
+      }));
+    } else {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
   };
 
   const fetchAddressByCep = async (cep: string) => {
@@ -92,10 +155,12 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
     }
 
     setIsLoadingCep(true);
-    setErrors(prev => ({
-      ...prev,
-      cep: undefined,
-    }));
+    
+    setErrors(prev => {
+      const newErrors = { ...prev };
+      delete newErrors.cep;
+      return newErrors;
+    });
 
     try {
       const address = await ViaCepService.getAddressByCep(cep);
@@ -106,7 +171,7 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
         street: address.logradouro || prev.street,
         neighborhood: address.bairro || prev.neighborhood,
         city: address.localidade || prev.city,
-        state: `${address.localidade} - ${address.uf}` || prev.state,
+        state: address.localidade ? `${address.localidade} - ${address.uf}` : prev.state,
       }));
 
       setErrors(prev => {
@@ -134,6 +199,47 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
     if (cleanCep.length === 8) {
       fetchAddressByCep(cleanCep);
     }
+    handleBlur('cep')();
+  };
+
+  const handleWasteToggle = (wasteType: WasteType) => {
+    const newAcceptedWastes = formData.acceptedWastes.includes(wasteType)
+      ? formData.acceptedWastes.filter(w => w !== wasteType)
+      : [...formData.acceptedWastes, wasteType];
+
+    setFormData(prev => ({
+      ...prev,
+      acceptedWastes: newAcceptedWastes,
+    }));
+
+    if (touched.acceptedWastes) {
+      const fieldError = ValidationService.validateField('acceptedWastes', newAcceptedWastes, formData);
+      if (fieldError) {
+        setErrors(prev => ({
+          ...prev,
+          acceptedWastes: fieldError,
+        }));
+      } else {
+        setErrors(prev => {
+          const newErrors = { ...prev };
+          delete newErrors.acceptedWastes;
+          return newErrors;
+        });
+      }
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const formErrors = ValidationService.validateCollectionPointForm(formData);
+    setErrors(formErrors);
+    
+    const allFields: Record<string, boolean> = {};
+    Object.keys(formData).forEach(key => {
+      allFields[key] = true;
+    });
+    setTouched(allFields);
+
+    return Object.keys(formErrors).length === 0;
   };
 
   const handleCancel = () => {
@@ -142,7 +248,79 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Formulário submetido:', formData);
+    
+    if (!validateForm()) {
+      const firstErrorField = Object.keys(errors)[0];
+      if (firstErrorField) {
+        const element = document.getElementById(firstErrorField);
+        element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+
+    if (!user?.id) {
+      setErrors({
+        general: 'Usuário não autenticado',
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    setErrors({});
+    
+    try {
+      const uniqueValidation = await CollectionPointService.validateUniquePoint(
+        formData,
+        isEditing ? initialData?.id : undefined
+      );
+
+      if (!uniqueValidation.isValid) {
+        setErrors({
+          name: uniqueValidation.message || 'Ponto já cadastrado',
+        });
+        return;
+      }
+
+      let savedPoint: CollectionPoint;
+
+      if (isEditing && initialData?.id) {
+        savedPoint = await CollectionPointService.updateCollectionPoint(
+          initialData.id,
+          formData,
+          user.id
+        );
+      } else {
+        savedPoint = await CollectionPointService.createCollectionPoint(
+          formData,
+          user.id
+        );
+      }
+
+      setSaveSuccess(true);
+      
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      navigate('/dashboard', { 
+        state: { 
+          message: isEditing 
+            ? 'Ponto de coleta atualizado com sucesso!' 
+            : 'Ponto de coleta cadastrado com sucesso!',
+          type: 'success' 
+        }
+      });
+
+    } catch (error) {
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : 'Erro ao salvar o local de coleta. Tente novamente.';
+      
+      setErrors({
+        general: errorMessage,
+      });
+    } finally {
+      setIsLoading(false);
+      setSaveSuccess(false);
+    }
   };
 
   const formClasses = [
@@ -179,6 +357,22 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
       </div>
 
       <form className="collection-point-form__form" onSubmit={handleSubmit}>
+        {(errors.general || saveSuccess) && (
+          <div className={`collection-point-form__status-banner ${saveSuccess ? 'collection-point-form__status-banner--success' : 'collection-point-form__status-banner--error'}`}>
+            <Icon 
+              name={saveSuccess ? 'recycle' : 'close'} 
+              size="sm" 
+              color={saveSuccess ? 'success' : 'error'} 
+            />
+            <Typography variant="body2" color={saveSuccess ? 'success' : 'error'}>
+              {saveSuccess 
+                ? (isEditing ? 'Ponto atualizado com sucesso!' : 'Ponto cadastrado com sucesso!')
+                : errors.general
+              }
+            </Typography>
+          </div>
+        )}
+
         <div className="collection-point-form__section">
           <Typography variant="h4" className="collection-point-form__section-title">
             Informações Básicas
@@ -190,6 +384,7 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
             placeholder="Ex: EcoPonto Centro"
             value={formData.name}
             onChange={handleInputChange('name')}
+            onBlur={handleBlur('name')}
             error={!!errors.name}
             errorMessage={errors.name}
             icon="location"
@@ -209,6 +404,7 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
               placeholder="Descreva o ponto de coleta, horários de funcionamento, informações relevantes..."
               value={formData.description}
               onChange={handleInputChange('description')}
+              onBlur={handleBlur('description')}
               disabled={isLoading}
               className={`collection-point-form__textarea ${errors.description ? 'collection-point-form__textarea--error' : ''}`}
               rows={4}
@@ -252,6 +448,7 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
               placeholder="Nome da rua"
               value={formData.street}
               onChange={handleInputChange('street')}
+              onBlur={handleBlur('street')}
               error={!!errors.street}
               errorMessage={errors.street}
               required
@@ -265,6 +462,7 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
               placeholder="123"
               value={formData.number}
               onChange={handleInputChange('number')}
+              onBlur={handleBlur('number')}
               error={!!errors.number}
               errorMessage={errors.number}
               required
@@ -290,6 +488,7 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
               placeholder="Nome do bairro"
               value={formData.neighborhood}
               onChange={handleInputChange('neighborhood')}
+              onBlur={handleBlur('neighborhood')}
               error={!!errors.neighborhood}
               errorMessage={errors.neighborhood}
               required
@@ -303,6 +502,7 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
               placeholder="Nome da cidade"
               value={formData.city}
               onChange={handleInputChange('city')}
+              onBlur={handleBlur('city')}
               error={!!errors.city}
               errorMessage={errors.city}
               required
@@ -317,6 +517,7 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
             placeholder="Nome do estado"
             value={formData.state}
             onChange={handleInputChange('state')}
+            onBlur={handleBlur('state')}
             error={!!errors.state}
             errorMessage={errors.state}
             required
@@ -335,11 +536,13 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
               id="latitude"
               label="Latitude"
               type="number"
-              placeholder="-27.5954"
+              placeholder="-26.3044"
               value={formData.latitude}
               onChange={handleInputChange('latitude')}
+              onBlur={handleBlur('latitude')}
               error={!!errors.latitude}
               errorMessage={errors.latitude}
+              helperText="Ex: -26.3044 (Sul: negativo, Norte: positivo)"
               required
               disabled={isLoading}
               fullWidth
@@ -352,8 +555,10 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
               placeholder="-48.5480"
               value={formData.longitude}
               onChange={handleInputChange('longitude')}
+              onBlur={handleBlur('longitude')}
               error={!!errors.longitude}
               errorMessage={errors.longitude}
+              helperText="Ex: -48.5480 (Oeste: negativo, Leste: positivo)"
               required
               disabled={isLoading}
               fullWidth

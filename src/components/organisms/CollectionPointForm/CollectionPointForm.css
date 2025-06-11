@@ -9,6 +9,25 @@
   border: 1px solid var(--border);
 }
 
+.collection-point-form__status-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.collection-point-form__status-banner--error {
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.collection-point-form__status-banner--success {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
 .collection-point-form__error-banner {
   display: flex;
   align-items: center;
@@ -276,6 +295,16 @@
   .collection-point-form__section {
     margin-bottom: var(--spacing-lg);
   }
+}
+
+[data-theme="dark"] .collection-point-form__status-banner--error {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: rgba(220, 38, 38, 0.3);
+}
+
+[data-theme="dark"] .collection-point-form__status-banner--success {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.3);
 }
 
 [data-theme="dark"] .collection-point-form__error-banner {
