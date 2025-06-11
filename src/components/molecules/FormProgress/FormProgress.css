@@ -1,0 +1,130 @@
+.form-progress {
+  width: 100%;
+  padding: var(--spacing-md);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-progress--sm {
+  padding: var(--spacing-sm);
+}
+
+.form-progress--lg {
+  padding: var(--spacing-lg);
+}
+
+.form-progress__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.form-progress__title {
+  color: var(--text-primary);
+}
+
+.form-progress__percentage {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.form-progress__bar-container {
+  position: relative;
+  height: 8px;
+  margin-bottom: var(--spacing-sm);
+}
+
+.form-progress--sm .form-progress__bar-container {
+  height: 6px;
+}
+
+.form-progress--lg .form-progress__bar-container {
+  height: 12px;
+}
+
+.form-progress__track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.form-progress__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  border-radius: var(--radius-sm);
+  transition: width 0.3s ease;
+  z-index: 1;
+}
+
+.form-progress__details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.form-progress__message {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+@media (max-width: 480px) {
+  .form-progress__details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+}
+
+[data-theme="dark"] .form-progress {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .form-progress__track {
+  background: var(--border);
+}
+
+@media (prefers-contrast: high) {
+  .form-progress {
+    border-width: 2px;
+  }
+
+  .form-progress__bar-container {
+    height: 10px;
+  }
+
+  .form-progress--sm .form-progress__bar-container {
+    height: 8px;
+  }
+
+  .form-progress--lg .form-progress__bar-container {
+    height: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-progress__bar {
+    transition: none;
+  }
+}
+
+@media print {
+  .form-progress {
+    background: white;
+    border: 1px solid black;
+  }
+
+  .form-progress__track {
+    background: #ddd;
+  }
+}

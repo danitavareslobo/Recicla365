@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Typography, Icon } from '../../atoms';
-import { FormField } from '../../molecules';
+import { FormField, FormProgress } from '../../molecules';
 import { useAuth } from '../../../contexts/AuthContext';
 import { ViaCepService, ValidationService, CollectionPointService } from '../../../services';
+import { FormUtils } from '../../../utils';
 import type { CollectionPoint, WasteType, CollectionPointFormData, WasteTypeOption } from '../../../types';
 import './CollectionPointForm.css';
 
@@ -52,6 +53,12 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
   const [isLoadingCep, setIsLoadingCep] = useState(false);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [formProgress, setFormProgress] = useState({ percentage: 0, completed: 0, total: 0 });
+
+  useEffect(() => {
+    const progress = FormUtils.calculateProgress(formData);
+    setFormProgress(progress);
+  }, [formData]);
 
   useEffect(() => {
     if (isEditing && initialData?.id) {
@@ -355,6 +362,13 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
           </Typography>
         </div>
       </div>
+
+      <FormProgress
+        percentage={formProgress.percentage}
+        completed={formProgress.completed}
+        total={formProgress.total}
+        className="collection-point-form__progress"
+      />
 
       <form className="collection-point-form__form" onSubmit={handleSubmit}>
         {(errors.general || saveSuccess) && (
