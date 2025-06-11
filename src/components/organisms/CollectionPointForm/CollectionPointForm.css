@@ -73,6 +73,10 @@
   justify-content: center;
 }
 
+.collection-point-form__progress {
+  margin-bottom: var(--spacing-xl);
+}
+
 .collection-point-form__form {
   width: 100%;
 }
