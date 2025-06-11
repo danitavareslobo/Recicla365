@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Typography, Icon } from '../../atoms';
 import { Card, SearchBox } from '../../molecules';
+import type { CardAction } from '../../molecules/Card/Card';
 import type { CollectionPoint, WasteType } from '../../../types';
 import './CollectionPointsList.css';
 
@@ -84,6 +85,44 @@ export const CollectionPointsList: React.FC<CollectionPointsListProps> = ({
     return new Date(dateString).toLocaleDateString('pt-BR');
   };
 
+  const createCardActions = (point: CollectionPoint): CardAction[] => {
+    if (!showActions) return [];
+
+    const actions: CardAction[] = [];
+
+    if (onView) {
+      actions.push({
+        id: 'view',
+        label: 'Ver',
+        icon: 'search',
+        variant: 'outline',
+        onClick: () => onView(point),
+      });
+    }
+
+    if (onEdit) {
+      actions.push({
+        id: 'edit',
+        label: 'Editar',
+        icon: 'edit',
+        variant: 'primary',
+        onClick: () => onEdit(point),
+      });
+    }
+
+    if (onDelete) {
+      actions.push({
+        id: 'delete',
+        label: 'Excluir',
+        icon: 'trash',
+        variant: 'danger',
+        onClick: () => onDelete(point),
+      });
+    }
+
+    return actions;
+  };
+
   const listClasses = [
     'collection-points-list',
     isLoading && 'collection-points-list--loading',
@@ -136,6 +175,13 @@ export const CollectionPointsList: React.FC<CollectionPointsListProps> = ({
               className="collection-points-list__search"
             />
           )}
+          
+          {onCreate && (
+            <Button variant="primary" onClick={onCreate} className="collection-points-list__create-button">
+              <Icon name="plus" size="sm" />
+              Novo Ponto
+            </Button>
+          )}
         </div>
       </div>
 
@@ -166,8 +212,10 @@ export const CollectionPointsList: React.FC<CollectionPointsListProps> = ({
               title={point.name}
               subtitle={formatAddress(point.address)}
               icon="location"
-              clickable={!!onView}
-              onClick={() => onView?.(point)}
+              clickable={!!onView && !showActions} 
+              onClick={showActions ? undefined : () => onView?.(point)}
+              actions={createCardActions(point)}
+              showActionsOnHover={true}
               className="collection-points-list__card"
             >
               <div className="collection-points-list__card-content">
@@ -201,52 +249,6 @@ export const CollectionPointsList: React.FC<CollectionPointsListProps> = ({
                     Cadastrado em {formatDate(point.createdAt)}
                   </Typography>
                 </div>
-
-                {showActions && (
-                  <div className="collection-points-list__card-actions">
-                    {onView && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={(e) => {
-                          e?.stopPropagation();
-                          onView(point);
-                        }}
-                      >
-                        <Icon name="search" size="sm" />
-                        Ver
-                      </Button>
-                    )}
-                    
-                    {onEdit && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={(e) => {
-                          e?.stopPropagation();
-                          onEdit(point);
-                        }}
-                      >
-                        <Icon name="edit" size="sm" />
-                        Editar
-                      </Button>
-                    )}
-                    
-                    {onDelete && (
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        onClick={(e) => {
-                          e?.stopPropagation();
-                          onDelete(point);
-                        }}
-                      >
-                        <Icon name="trash" size="sm" />
-                        Excluir
-                      </Button>
-                    )}
-                  </div>
-                )}
               </div>
             </Card>
           ))}
