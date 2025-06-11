@@ -1,7 +1,6 @@
 import React from 'react';
 import { Header, Navigation } from '../../components/organisms';
-import { MainTemplate } from '../../components/templates';
-import { CollectionPointForm } from '../../components/organisms/CollectionPointForm';
+import { CollectionPointForm } from '../../components/organisms';
 import './CadastroLocal.css';
 
 export const CadastroLocal: React.FC = () => {
@@ -9,13 +8,11 @@ export const CadastroLocal: React.FC = () => {
     <>
       <Header />
       <Navigation variant="horizontal" />
-      <MainTemplate variant="default">
-        <div className="cadastro-local">
-          <div className="cadastro-local__container">
-            <CollectionPointForm />
-          </div>
+      <div className="cadastro-local">
+        <div className="cadastro-local__container">
+          <CollectionPointForm />
         </div>
-      </MainTemplate>
+      </div>
     </>
   );
 };

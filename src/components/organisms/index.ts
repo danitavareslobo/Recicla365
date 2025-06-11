@@ -4,3 +4,4 @@ export { CollectionPointsList } from './CollectionPointsList';
 export { CollectionPointForm } from './CollectionPointForm';
 export { LoginForm } from './LoginForm';
 export { RegisterForm } from './RegisterForm';
+export { DashboardStats } from './DashboardStats';
