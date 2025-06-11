@@ -5,3 +5,5 @@ export { CollectionPointForm } from './CollectionPointForm';
 export { LoginForm } from './LoginForm';
 export { RegisterForm } from './RegisterForm';
 export { DashboardStats } from './DashboardStats';
+export { CollectionPointViewModal } from './CollectionPointViewModal';
+export { ConfirmDeleteModal } from './ConfirmDeleteModal';
