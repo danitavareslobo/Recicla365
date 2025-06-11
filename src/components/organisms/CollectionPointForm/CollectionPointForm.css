@@ -1,11 +1,23 @@
 .collection-point-form {
   width: 100%;
-  max-width: 800px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: var(--spacing-xl);
-  background: var(--color-surface);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.collection-point-form__error-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
 }
 
 .collection-point-form__header {
@@ -30,9 +42,9 @@
 .collection-point-form__user-info {
   margin-bottom: var(--spacing-xl);
   padding: var(--spacing-md);
-  background: var(--color-accent-light);
-  border-radius: var(--border-radius-md);
-  border: 2px solid var(--color-accent);
+  background: rgba(74, 222, 128, 0.1);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--accent);
 }
 
 .collection-point-form__user-badge {
@@ -49,7 +61,7 @@
 .collection-point-form__section {
   margin-bottom: var(--spacing-xl);
   padding-bottom: var(--spacing-lg);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--border);
 }
 
 .collection-point-form__section:last-of-type {
@@ -59,8 +71,8 @@
 
 .collection-point-form__section-title {
   margin-bottom: var(--spacing-sm);
-  color: var(--color-primary);
-  border-left: 4px solid var(--color-accent);
+  color: var(--text-primary);
+  border-left: 4px solid var(--accent);
   padding-left: var(--spacing-md);
 }
 
@@ -70,7 +82,7 @@
 
 .collection-point-form__row {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 2fr 1fr;
   gap: var(--spacing-md);
   align-items: start;
 }
@@ -91,11 +103,11 @@
 }
 
 .collection-point-form__label-icon {
-  color: var(--color-accent);
+  color: var(--accent);
 }
 
 .collection-point-form__required {
-  color: var(--color-error);
+  color: #dc2626;
   margin-left: var(--spacing-xs);
 }
 
@@ -103,25 +115,25 @@
   width: 100%;
   min-height: 100px;
   padding: var(--spacing-md);
-  border: 2px solid var(--color-border);
-  border-radius: var(--border-radius-md);
-  background: var(--color-surface);
-  color: var(--color-text-primary);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-family: inherit;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-base);
   line-height: 1.5;
   resize: vertical;
-  transition: all var(--transition-fast);
+  transition: all 0.3s ease;
 }
 
 .collection-point-form__textarea:focus {
   outline: none;
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px var(--color-accent-light);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
 }
 
 .collection-point-form__textarea--error {
-  border-color: var(--color-error);
+  border-color: #dc2626;
 }
 
 .collection-point-form__textarea:disabled {
@@ -138,8 +150,8 @@
 
 .collection-point-form__waste-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-md);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
 }
 
@@ -148,25 +160,25 @@
   align-items: center;
   gap: var(--spacing-sm);
   padding: var(--spacing-md);
-  border: 2px solid var(--color-border);
-  border-radius: var(--border-radius-md);
-  background: var(--color-surface);
-  color: var(--color-text-primary);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+  color: var(--text-primary);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all 0.3s ease;
   font-family: inherit;
 }
 
 .collection-point-form__waste-option:hover:not(:disabled) {
-  border-color: var(--color-accent-light);
-  background: var(--color-accent-light);
+  border-color: rgba(74, 222, 128, 0.5);
+  background: rgba(74, 222, 128, 0.1);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
 .collection-point-form__waste-option--selected {
   border-width: 2px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
 .collection-point-form__waste-option:disabled {
@@ -187,12 +199,30 @@
   gap: var(--spacing-md);
   margin-top: var(--spacing-xl);
   padding-top: var(--spacing-lg);
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--border);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1400px) {
   .collection-point-form {
+    max-width: 1200px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .collection-point-form {
+    max-width: 1000px;
     padding: var(--spacing-lg);
+  }
+
+  .collection-point-form__waste-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+  }
+}
+
+@media (max-width: 968px) {
+  .collection-point-form {
+    max-width: 800px;
   }
 
   .collection-point-form__row {
@@ -204,7 +234,20 @@
   }
 
   .collection-point-form__waste-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .collection-point-form {
+    max-width: none;
+    margin: 0;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+  }
+
+  .collection-point-form__waste-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
   .collection-point-form__actions {
@@ -214,40 +257,101 @@
 
 @media (max-width: 480px) {
   .collection-point-form {
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  .collection-point-form__waste-grid {
+    grid-template-columns: 1fr;
   }
 
   .collection-point-form__waste-option {
     padding: var(--spacing-sm);
   }
+
+  .collection-point-form__header {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .collection-point-form__section {
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+[data-theme="dark"] .collection-point-form__error-banner {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: rgba(220, 38, 38, 0.3);
 }
 
 [data-theme="dark"] .collection-point-form {
-  background: var(--color-surface-dark);
-  box-shadow: var(--shadow-dark);
+  background: var(--bg-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-color: var(--border);
 }
 
 [data-theme="dark"] .collection-point-form__user-info {
-  background: var(--color-accent-dark);
-  border-color: var(--color-accent);
+  background: rgba(74, 222, 128, 0.1);
+  border-color: var(--accent);
 }
 
 [data-theme="dark"] .collection-point-form__section {
-  border-bottom-color: var(--color-border-dark);
+  border-bottom-color: var(--border);
 }
 
 [data-theme="dark"] .collection-point-form__textarea {
-  background: var(--color-surface-dark);
-  border-color: var(--color-border-dark);
-  color: var(--color-text-primary-dark);
+  background: var(--bg-primary);
+  border-color: var(--border);
+  color: var(--text-primary);
 }
 
 [data-theme="dark"] .collection-point-form__waste-option {
-  background: var(--color-surface-dark);
-  border-color: var(--color-border-dark);
-  color: var(--color-text-primary-dark);
+  background: var(--bg-primary);
+  border-color: var(--border);
+  color: var(--text-primary);
 }
 
 [data-theme="dark"] .collection-point-form__actions {
-  border-top-color: var(--color-border-dark);
+  border-top-color: var(--border);
+}
+
+@media print {
+  .collection-point-form {
+    background: white;
+    color: black;
+    box-shadow: none;
+    border: 1px solid #000;
+    page-break-inside: avoid;
+  }
+
+  .collection-point-form__actions {
+    display: none;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .collection-point-form {
+    border-width: 2px;
+  }
+
+  .collection-point-form__section {
+    border-bottom-width: 2px;
+  }
+
+  .collection-point-form__actions {
+    border-top-width: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collection-point-form__waste-option {
+    transition: none;
+  }
+
+  .collection-point-form__waste-option:hover {
+    transform: none;
+  }
+
+  .collection-point-form__textarea {
+    transition: none;
+  }
 }

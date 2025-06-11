@@ -55,6 +55,27 @@ export interface ViaCepResponse {
   erro?: boolean;
 }
 
+export interface CollectionPointFormData {
+  name: string;
+  description: string;
+  cep: string;
+  street: string;
+  number: string;
+  complement: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  latitude: string;
+  longitude: string;
+  acceptedWastes: WasteType[];
+}
+
+export interface WasteTypeOption {
+  value: WasteType;
+  label: string;
+  color: string;
+}
+
 export type Theme = 'light' | 'dark';
 
 export interface ThemeContextType {
