@@ -4,7 +4,7 @@
   border-radius: var(--radius-lg);
   padding: var(--spacing-lg);
   box-shadow: 0 2px 4px var(--shadow);
-  transition: all 0.2s ease-in-out;
+  transition: all var(--transition-normal);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -50,7 +50,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all var(--transition-normal);
 }
 
 .card__title-section {
@@ -96,14 +96,14 @@
 }
 
 .card--with-actions {
-  padding-bottom: calc(var(--spacing-lg) + 3rem); 
+  padding-bottom: calc(var(--spacing-lg) + 3rem);
   position: relative;
 }
 
 .card--hover-actions .card__actions {
   opacity: 0;
   transform: translateY(8px);
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal);
 }
 
 .card--hover-actions:hover .card__actions {
@@ -134,7 +134,7 @@
   font-size: var(--font-size-sm);
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-normal);
   white-space: nowrap;
   min-width: fit-content;
 }
@@ -156,8 +156,8 @@
 }
 
 .card__action-button--primary:hover:not(:disabled) {
-  background: var(--accent);
-  opacity: 0.9;
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 .card__action-button--secondary {
@@ -184,14 +184,15 @@
 }
 
 .card__action-button--danger {
-  background: #dc3545;
+  background: var(--error);
   color: white;
-  border-color: #dc3545;
+  border-color: var(--error);
 }
 
 .card__action-button--danger:hover:not(:disabled) {
-  background: #c82333;
-  border-color: #c82333;
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px var(--shadow);
 }
 
 .card__action-label {

@@ -1,0 +1,1 @@
+export { LocaisColeta } from './LocaisColeta';

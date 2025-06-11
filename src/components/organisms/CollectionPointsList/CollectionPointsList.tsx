@@ -1,3 +1,4 @@
+// src/components/organisms/CollectionPointsList/CollectionPointsList.tsx - Atualizado
 import React, { useState, useEffect } from 'react';
 import { Button, Typography, Icon } from '../../atoms';
 import { Card, SearchBox } from '../../molecules';
@@ -85,6 +86,7 @@ export const CollectionPointsList: React.FC<CollectionPointsListProps> = ({
     return new Date(dateString).toLocaleDateString('pt-BR');
   };
 
+  // Criar ações do card baseado nas props
   const createCardActions = (point: CollectionPoint): CardAction[] => {
     if (!showActions) return [];
 
@@ -212,7 +214,7 @@ export const CollectionPointsList: React.FC<CollectionPointsListProps> = ({
               title={point.name}
               subtitle={formatAddress(point.address)}
               icon="location"
-              clickable={!!onView && !showActions} 
+              clickable={!!onView && !showActions} // Só clickable se não tiver ações
               onClick={showActions ? undefined : () => onView?.(point)}
               actions={createCardActions(point)}
               showActionsOnHover={true}
