@@ -1,4 +1,3 @@
-/* CollectionPointForm.css */
 .collection-point-form {
   width: 100%;
   max-width: 1400px;
@@ -222,7 +221,6 @@
   border-top: 1px solid var(--border);
 }
 
-/* Responsive Design */
 @media (max-width: 1400px) {
   .collection-point-form {
     max-width: 1200px;
@@ -299,7 +297,6 @@
   }
 }
 
-/* Dark Theme */
 [data-theme="dark"] .collection-point-form__status-banner--error {
   background: rgba(220, 38, 38, 0.15);
   border-color: rgba(220, 38, 38, 0.3);
@@ -346,7 +343,6 @@
   border-top-color: var(--border);
 }
 
-/* Print Styles */
 @media print {
   .collection-point-form {
     background: white;
@@ -361,7 +357,6 @@
   }
 }
 
-/* High Contrast */
 @media (prefers-contrast: high) {
   .collection-point-form {
     border-width: 2px;
@@ -376,7 +371,6 @@
   }
 }
 
-/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   .collection-point-form__waste-option {
     transition: none;
