@@ -28,7 +28,7 @@ const navigationItems: NavigationItem[] = [
   {
     id: 'collection-points-list',
     label: 'Pontos de Coleta',
-    path: '/collection-points',
+    path: '/locais-coleta',              
     icon: 'location',
     requiresAuth: true,
   },
@@ -76,6 +76,9 @@ export const Navigation: React.FC<NavigationProps> = ({
     }
     if (path === '/cadastro-local') {
       return location.pathname === '/cadastro-local';
+    }
+    if (path === '/locais-coleta') {          
+      return location.pathname === '/locais-coleta';
     }
     return location.pathname.startsWith(path);
   };

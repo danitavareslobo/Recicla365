@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { Login, Register, Dashboard, CadastroLocal } from './pages';
+import { Login, Register, Dashboard, CadastroLocal, LocaisColeta } from './pages';
 import './styles/globals.css';
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -53,6 +53,15 @@ const App: React.FC = () => {
               element={
                 <PrivateRoute>
                   <CadastroLocal />
+                </PrivateRoute>
+              } 
+            />
+
+            <Route 
+              path="/locais-coleta" 
+              element={
+                <PrivateRoute>
+                  <LocaisColeta />
                 </PrivateRoute>
               } 
             />
