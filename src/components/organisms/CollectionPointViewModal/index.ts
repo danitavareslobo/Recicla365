@@ -1,0 +1,1 @@
+export { CollectionPointViewModal } from './CollectionPointViewModal';
