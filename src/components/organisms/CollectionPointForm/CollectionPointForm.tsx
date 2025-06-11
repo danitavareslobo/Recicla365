@@ -3,23 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Typography, Icon } from '../../atoms';
 import { FormField } from '../../molecules';
 import { useAuth } from '../../../contexts/AuthContext';
-import type { CollectionPoint, WasteType } from '../../../types';
+import { ViaCepService } from '../../../services';
+import type { CollectionPoint, WasteType, CollectionPointFormData, WasteTypeOption } from '../../../types';
 import './CollectionPointForm.css';
-
-interface CollectionPointFormData {
-  name: string;
-  description: string;
-  cep: string;
-  street: string;
-  number: string;
-  complement: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-  latitude: string;
-  longitude: string;
-  acceptedWastes: WasteType[];
-}
 
 interface CollectionPointFormProps {
   initialData?: Partial<CollectionPoint>;
@@ -27,7 +13,7 @@ interface CollectionPointFormProps {
   className?: string;
 }
 
-const wasteTypeOptions: { value: WasteType; label: string; color: string }[] = [
+const wasteTypeOptions: WasteTypeOption[] = [
   { value: 'Vidro', label: 'Vidro', color: '#22c55e' },
   { value: 'Metal', label: 'Metal', color: '#6b7280' },
   { value: 'Papel', label: 'Papel', color: '#3b82f6' },
@@ -68,9 +54,15 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
   const handleInputChange = (field: keyof CollectionPointFormData) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    let value = e.target.value;
+
+    if (field === 'cep') {
+      value = ViaCepService.maskCep(value);
+    }
+
     setFormData(prev => ({
       ...prev,
-      [field]: e.target.value,
+      [field]: value,
     }));
 
     if (errors[field]) {
@@ -90,8 +82,62 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
     }));
   };
 
+  const fetchAddressByCep = async (cep: string) => {
+    if (!ViaCepService.isValidCep(cep)) {
+      setErrors(prev => ({
+        ...prev,
+        cep: 'CEP deve ter 8 dígitos',
+      }));
+      return;
+    }
+
+    setIsLoadingCep(true);
+    setErrors(prev => ({
+      ...prev,
+      cep: undefined,
+    }));
+
+    try {
+      const address = await ViaCepService.getAddressByCep(cep);
+
+      setFormData(prev => ({
+        ...prev,
+        cep: ViaCepService.formatCep(cep),
+        street: address.logradouro || prev.street,
+        neighborhood: address.bairro || prev.neighborhood,
+        city: address.localidade || prev.city,
+        state: `${address.localidade} - ${address.uf}` || prev.state,
+      }));
+
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        if (address.logradouro) delete newErrors.street;
+        if (address.bairro) delete newErrors.neighborhood;
+        if (address.localidade) delete newErrors.city;
+        if (address.uf) delete newErrors.state;
+        return newErrors;
+      });
+
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Erro ao buscar CEP';
+      setErrors(prev => ({
+        ...prev,
+        cep: errorMessage,
+      }));
+    } finally {
+      setIsLoadingCep(false);
+    }
+  };
+
+  const handleCepBlur = () => {
+    const cleanCep = ViaCepService.cleanCep(formData.cep);
+    if (cleanCep.length === 8) {
+      fetchAddressByCep(cleanCep);
+    }
+  };
+
   const handleCancel = () => {
-    navigate('/collection-points');
+    navigate('/dashboard');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -189,6 +235,7 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
             placeholder="00000-000"
             value={formData.cep}
             onChange={handleInputChange('cep')}
+            onBlur={handleCepBlur}
             error={!!errors.cep}
             errorMessage={errors.cep}
             icon="location"
