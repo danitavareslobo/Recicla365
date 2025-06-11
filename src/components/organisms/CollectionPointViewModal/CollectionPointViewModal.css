@@ -15,9 +15,9 @@
 }
 
 .collection-point-view-modal__content {
-  background: var(--color-surface);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-lg);
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px var(--shadow);
   max-width: 600px;
   width: 100%;
   max-height: 90vh;
@@ -30,10 +30,10 @@
   align-items: flex-start;
   justify-content: space-between;
   padding: var(--spacing-xl);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
-  background: var(--color-surface);
+  background: var(--bg-primary);
   z-index: 1;
 }
 
@@ -46,20 +46,20 @@
 
 .collection-point-view-modal__title {
   margin: 0;
-  color: var(--color-text-primary);
+  color: var(--text-primary);
   line-height: 1.3;
 }
 
 .collection-point-view-modal__close {
   min-width: auto;
   padding: var(--spacing-xs);
-  border-radius: var(--border-radius-full);
+  border-radius: var(--radius-full);
   flex-shrink: 0;
 }
 
 .collection-point-view-modal__close:hover {
-  background: var(--color-error-light);
-  color: var(--color-error);
+  background: #dc354520;
+  color: #dc3545;
 }
 
 .collection-point-view-modal__body {
@@ -80,16 +80,16 @@
   align-items: center;
   gap: var(--spacing-sm);
   margin: 0;
-  color: var(--color-text-primary);
+  color: var(--text-primary);
   font-weight: 600;
   padding-bottom: var(--spacing-xs);
-  border-bottom: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--border);
 }
 
 .collection-point-view-modal__description {
   margin: 0;
   line-height: 1.6;
-  color: var(--color-text-secondary);
+  color: var(--text-secondary);
 }
 
 .collection-point-view-modal__address {
@@ -99,11 +99,11 @@
 }
 
 .collection-point-view-modal__coordinates {
-  font-family: var(--font-mono, 'Courier New', monospace);
-  background: var(--color-background);
+  font-family: 'Courier New', monospace;
+  background: var(--bg-secondary);
   padding: var(--spacing-sm);
-  border-radius: var(--border-radius-sm);
-  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
 }
 
 .collection-point-view-modal__waste-types {
@@ -117,21 +117,21 @@
   align-items: center;
   gap: var(--spacing-xs);
   padding: var(--spacing-xs) var(--spacing-sm);
-  background: var(--color-background);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-full);
-  transition: all var(--transition-fast);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
 }
 
 .collection-point-view-modal__waste-type:hover {
   transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 4px var(--shadow);
 }
 
 .collection-point-view-modal__waste-color {
   width: 12px;
   height: 12px;
-  border-radius: var(--border-radius-full);
+  border-radius: var(--radius-full);
   background: var(--waste-color);
   flex-shrink: 0;
 }
@@ -141,9 +141,9 @@
   flex-direction: column;
   gap: var(--spacing-xs);
   padding: var(--spacing-md);
-  background: var(--color-background);
-  border-radius: var(--border-radius-sm);
-  border-left: 3px solid var(--color-primary);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
 }
 
 .collection-point-view-modal__footer {
@@ -151,8 +151,8 @@
   justify-content: flex-end;
   gap: var(--spacing-md);
   padding: var(--spacing-xl);
-  border-top: 1px solid var(--color-border);
-  background: var(--color-background);
+  border-top: 1px solid var(--border);
+  background: var(--bg-secondary);
 }
 
 @keyframes modalFadeIn {
@@ -219,5 +219,43 @@
   .collection-point-view-modal__waste-type {
     font-size: var(--font-size-sm);
     padding: var(--spacing-xs);
+  }
+}
+
+.collection-point-view-modal__content:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-contrast: high) {
+  .collection-point-view-modal__content {
+    border: 2px solid var(--border);
+  }
+
+  .collection-point-view-modal__waste-type {
+    border-width: 2px;
+  }
+
+  .collection-point-view-modal__meta {
+    border-left-width: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collection-point-view-modal,
+  .collection-point-view-modal__content,
+  .collection-point-view-modal__waste-type {
+    animation: none;
+    transition: none;
+  }
+
+  .collection-point-view-modal__waste-type:hover {
+    transform: none;
+  }
+}
+
+@media print {
+  .collection-point-view-modal {
+    display: none;
   }
 }
