@@ -38,3 +38,24 @@ export interface FormValidationResult {
   errors: FormErrors;
   firstErrorField?: string;
 }
+
+export interface ProfileFormData {
+  name: string;
+  email: string;
+  cpf: string;
+  gender: 'M' | 'F' | 'Outro';
+  birthDate: string;
+  cep: string;
+  street: string;
+  number: string;
+  complement: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+}
+
+export interface ProfileFormProps {
+  onUpdateSuccess?: () => void;
+  onCancel?: () => void;
+  className?: string;
+}
