@@ -68,27 +68,6 @@ export const Perfil: React.FC = () => {
         )}
 
         <div className="profile-page__header">
-          <div className="profile-page__breadcrumb">
-            <button 
-              onClick={() => navigate('/dashboard')}
-              className="profile-page__breadcrumb-link"
-            >
-              <Icon name="arrow-left" size="sm" />
-              Dashboard
-            </button>
-            <span className="profile-page__breadcrumb-separator">/</span>
-            <span className="profile-page__breadcrumb-current">Perfil</span>
-          </div>
-
-          <div className="profile-page__title-section">
-            <Typography variant="h1" className="profile-page__title">
-              Meu Perfil
-            </Typography>
-            <Typography variant="body1" color="secondary" className="profile-page__subtitle">
-              Gerencie suas informações pessoais e mantenha seus dados atualizados
-            </Typography>
-          </div>
-
           <div className="profile-page__user-badge">
             <div className="profile-page__avatar">
               <Icon name="user" size="lg" color="white" />
