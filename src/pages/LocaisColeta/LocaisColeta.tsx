@@ -1,4 +1,3 @@
-// src/pages/LocaisColeta/LocaisColeta.tsx - Corrigido
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -6,6 +5,7 @@ import {
   CollectionPointViewModal, 
   ConfirmDeleteModal 
 } from '../../components/organisms';
+import { DashboardTemplate } from '../../components/templates'; 
 import { useAuth } from '../../contexts/AuthContext';
 import { CollectionPointService } from '../../services';
 import type { CollectionPoint } from '../../types';
@@ -15,18 +15,15 @@ export const LocaisColeta: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   
-  // Estados principais
   const [points, setPoints] = useState<CollectionPoint[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
-  // Estados dos modais
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState<CollectionPoint | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // Carregar pontos de coleta
   useEffect(() => {
     loadCollectionPoints();
   }, []);
@@ -35,7 +32,6 @@ export const LocaisColeta: React.FC = () => {
     try {
       setIsLoading(true);
       setError(null);
-      // Usar o método correto do serviço existente
       const data = await CollectionPointService.getAllCollectionPoints();
       setPoints(data);
     } catch (err) {
@@ -46,9 +42,8 @@ export const LocaisColeta: React.FC = () => {
     }
   };
 
-  // Handlers para ações
   const handleCreate = () => {
-    navigate('/pontos-coleta/novo');
+    navigate('/cadastro-local');
   };
 
   const handleView = (point: CollectionPoint) => {
@@ -57,7 +52,7 @@ export const LocaisColeta: React.FC = () => {
   };
 
   const handleEdit = (point: CollectionPoint) => {
-    navigate(`/pontos-coleta/editar/${point.id}`);
+    navigate(`/cadastro-local?edit=${point.id}`);
   };
 
   const handleDelete = (point: CollectionPoint) => {
@@ -73,17 +68,12 @@ export const LocaisColeta: React.FC = () => {
 
     try {
       setIsDeleting(true);
-      // Usar o método correto com userId
       await CollectionPointService.deleteCollectionPoint(point.id, user.id);
       
-      // Atualizar lista local
       setPoints(prevPoints => prevPoints.filter(p => p.id !== point.id));
-      
-      // Fechar modal
       setDeleteModalOpen(false);
       setSelectedPoint(null);
       
-      // TODO: Adicionar toast de sucesso aqui
       console.log('Ponto de coleta excluído com sucesso');
       
     } catch (err) {
@@ -118,8 +108,8 @@ export const LocaisColeta: React.FC = () => {
   };
 
   return (
-    <div className="locais-coleta-page">
-      <div className="container">
+    <DashboardTemplate>
+      <div className="locais-coleta-page">
         {error && (
           <div className="locais-coleta-page__error">
             <p>{error}</p>
@@ -138,22 +128,22 @@ export const LocaisColeta: React.FC = () => {
           onDelete={handleDelete}
           className="locais-coleta-page__list"
         />
+
+        <CollectionPointViewModal
+          point={selectedPoint}
+          isOpen={viewModalOpen}
+          onClose={handleCloseViewModal}
+          onEdit={handleEditFromModal}
+        />
+
+        <ConfirmDeleteModal
+          point={selectedPoint}
+          isOpen={deleteModalOpen}
+          onClose={handleCloseDeleteModal}
+          onConfirm={handleConfirmDelete}
+          isDeleting={isDeleting}
+        />
       </div>
-
-      <CollectionPointViewModal
-        point={selectedPoint}
-        isOpen={viewModalOpen}
-        onClose={handleCloseViewModal}
-        onEdit={handleEditFromModal}
-      />
-
-      <ConfirmDeleteModal
-        point={selectedPoint}
-        isOpen={deleteModalOpen}
-        onClose={handleCloseDeleteModal}
-        onConfirm={handleConfirmDelete}
-        isDeleting={isDeleting}
-      />
-    </div>
+    </DashboardTemplate>
   );
 };

@@ -1,4 +1,5 @@
 import type { CollectionPoint, CollectionPointFormData, Address } from '../types';
+import { mockCollectionPoints } from '../data';
 
 export interface CreateCollectionPointData {
   name: string;
@@ -14,6 +15,30 @@ export interface CreateCollectionPointData {
 
 export class CollectionPointService {
   private static readonly STORAGE_KEY = '@recicla365:collection-points';
+
+  private static initializeDataIfEmpty(): void {
+    try {
+      const stored = localStorage.getItem(this.STORAGE_KEY);
+      if (!stored || stored === '[]' || JSON.parse(stored).length === 0) {
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(mockCollectionPoints));
+        console.log('✅ Dados iniciais de pontos de coleta carregados:', mockCollectionPoints.length, 'pontos');
+      }
+    } catch (error) {
+      console.error('Erro ao inicializar dados:', error);
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(mockCollectionPoints));
+    }
+  }
+
+  private static getFromStorage(): CollectionPoint[] {
+    try {
+      this.initializeDataIfEmpty();
+      const stored = localStorage.getItem(this.STORAGE_KEY);
+      return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+      console.error('Erro ao ler pontos de coleta do localStorage:', error);
+      return [];
+    }
+  }
 
   static async createCollectionPoint(
     formData: CollectionPointFormData, 
@@ -45,7 +70,6 @@ export class CollectionPointService {
     };
 
     this.saveToStorage(newCollectionPoint);
-
     return newCollectionPoint;
   }
 
@@ -92,27 +116,23 @@ export class CollectionPointService {
 
     existingPoints[pointIndex] = updatedPoint;
     this.saveAllToStorage(existingPoints);
-
     return updatedPoint;
   }
 
   static async getCollectionPointById(id: string): Promise<CollectionPoint | null> {
     await new Promise(resolve => setTimeout(resolve, 300));
-
     const points = this.getFromStorage();
     return points.find(point => point.id === id) || null;
   }
 
   static async getUserCollectionPoints(userId: string): Promise<CollectionPoint[]> {
     await new Promise(resolve => setTimeout(resolve, 500));
-
     const points = this.getFromStorage();
     return points.filter(point => point.userId === userId);
   }
 
   static async getAllCollectionPoints(): Promise<CollectionPoint[]> {
     await new Promise(resolve => setTimeout(resolve, 300));
-
     return this.getFromStorage();
   }
 
@@ -155,16 +175,6 @@ export class CollectionPointService {
         waste.toLowerCase().includes(lowercaseQuery)
       )
     );
-  }
-
-  private static getFromStorage(): CollectionPoint[] {
-    try {
-      const stored = localStorage.getItem(this.STORAGE_KEY);
-      return stored ? JSON.parse(stored) : [];
-    } catch (error) {
-      console.error('Erro ao ler pontos de coleta do localStorage:', error);
-      return [];
-    }
   }
 
   private static saveToStorage(point: CollectionPoint): void {
