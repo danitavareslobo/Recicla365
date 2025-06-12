@@ -57,6 +57,42 @@ export interface ViaCepResponse {
   erro?: boolean;
 }
 
+export interface ValidationErrors {
+  [key: string]: string;
+}
+
+export interface CreateCollectionPointData {
+  name: string;
+  description: string;
+  userId: string;
+  address: Address;
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  acceptedWastes: string[];
+}
+
+export interface ApiResponse<T> {
+  data: T;
+  success: boolean;
+  message?: string;
+  errors?: ValidationErrors;
+}
+
+export interface AuthResponse {
+  success: boolean;
+  user?: Omit<User, 'password'>;
+  token?: string;
+  message?: string;
+}
+
+export interface TestResult {
+  passed: boolean;
+  message: string;
+  details?: any;
+}
+
 export interface CollectionPointFormData {
   name: string;
   description: string;
@@ -76,6 +112,13 @@ export interface WasteTypeOption {
   value: WasteType;
   label: string;
   color: string;
+}
+
+export interface FormProgress {
+  percentage: number;
+  completed: number;
+  total: number;
+  missingFields: string[];
 }
 
 export interface ThemeContextType {

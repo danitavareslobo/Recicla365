@@ -1,13 +1,7 @@
 import { ValidationService } from '../services/validationService';
 import { ViaCepService } from '../services/viaCepService';
 import { FormUtils } from './formUtils';
-import type { CollectionPointFormData } from '../types';
-
-export interface TestResult {
-  passed: boolean;
-  message: string;
-  details?: any;
-}
+import type { CollectionPointFormData, TestResult } from '../types';
 
 export class FormTestHelper {
   static async runAllTests(): Promise<{

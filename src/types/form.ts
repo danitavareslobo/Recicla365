@@ -1,3 +1,5 @@
+import type { User } from './index';
+
 export interface LoginFormData {
   email: string;
   password: string;
@@ -22,4 +24,17 @@ export interface RegisterFormData {
 
 export interface FormErrors {
   [key: string]: string;
+}
+
+export interface RegistrationData extends Omit<RegisterFormData, 'confirmPassword'> {}
+
+export interface FieldValidation {
+  isValid: boolean;
+  error?: string;
+}
+
+export interface FormValidationResult {
+  isValid: boolean;
+  errors: FormErrors;
+  firstErrorField?: string;
 }

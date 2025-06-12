@@ -1,17 +1,5 @@
-import type { CollectionPoint, CollectionPointFormData, Address } from '../types';
+import type { CollectionPoint, CollectionPointFormData, Address, CreateCollectionPointData } from '../types';
 import { mockCollectionPoints } from '../data';
-
-export interface CreateCollectionPointData {
-  name: string;
-  description: string;
-  userId: string;
-  address: Address;
-  coordinates: {
-    latitude: number;
-    longitude: number;
-  };
-  acceptedWastes: string[];
-}
 
 export class CollectionPointService {
   private static readonly STORAGE_KEY = '@recicla365:collection-points';

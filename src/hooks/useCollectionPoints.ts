@@ -1,21 +1,6 @@
 import { useState, useEffect } from 'react';
 import { CollectionPointService } from '../services';
-import type { CollectionPoint } from '../types';
-
-export interface UseCollectionPointsReturn {
-  collectionPoints: CollectionPoint[];
-  isLoading: boolean;
-  error: string | null;
-  refresh: () => Promise<void>;
-  getUserPoints: (userId: string) => Promise<void>;
-  searchPoints: (query: string) => Promise<void>;
-  statistics: {
-    total: number;
-    byWasteType: Record<string, number>;
-    byCity: Record<string, number>;
-    recent: number;
-  };
-}
+import type { CollectionPoint, UseCollectionPointsReturn, UseCollectionPointReturn } from '../types';
 
 export const useCollectionPoints = (): UseCollectionPointsReturn => {
   const [collectionPoints, setCollectionPoints] = useState<CollectionPoint[]>([]);
@@ -94,14 +79,6 @@ export const useCollectionPoints = (): UseCollectionPointsReturn => {
     statistics,
   };
 };
-
-export interface UseCollectionPointReturn {
-  collectionPoint: CollectionPoint | null;
-  isLoading: boolean;
-  error: string | null;
-  load: (id: string) => Promise<void>;
-  delete: (id: string, userId: string) => Promise<void>;
-}
 
 export const useCollectionPoint = (): UseCollectionPointReturn => {
   const [collectionPoint, setCollectionPoint] = useState<CollectionPoint | null>(null);
