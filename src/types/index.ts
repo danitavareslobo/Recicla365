@@ -131,6 +131,7 @@ export interface AuthContextType {
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
   register: (userData: Omit<User, 'id' | 'createdAt'>) => Promise<boolean>;
+  updateUser: (userData: Partial<User>) => Promise<boolean>;
   isAuthenticated: boolean;
 }
 

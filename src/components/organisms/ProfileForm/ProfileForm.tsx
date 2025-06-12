@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Button, Typography, Icon } from '../../atoms';
 import { FormField } from '../../molecules';
 import { useAuth } from '../../../contexts/AuthContext';
-import type { FormErrors, ViaCepResponse, ProfileFormProps, ProfileFormData } from '../../../types';
+import { UserService } from '../../../services';
+import type { FormErrors, ViaCepResponse, User } from '../../../types';
+import type { ProfileFormData, ProfileFormProps } from '../../../types/form';
 import './ProfileForm.css';
 
 export const ProfileForm: React.FC<ProfileFormProps> = ({
@@ -10,7 +12,7 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
   onCancel,
   className = '',
 }) => {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth(); 
   
   const [formData, setFormData] = useState<ProfileFormData>({
     name: '',
@@ -207,24 +209,57 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
     setIsLoading(true);
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const validation = await UserService.validateUniqueUser({
+        cpf: formData.cpf,
+        email: formData.email
+      }, user.id);
+
+      if (!validation.isValid) {
+        setErrors({
+          [validation.field || 'general']: validation.message || 'Dados já cadastrados para outro usuário',
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      const updateData: Partial<User> = {
+        name: formData.name.trim(),
+        email: formData.email,
+        cpf: formData.cpf,
+        gender: formData.gender,
+        birthDate: formData.birthDate,
+        address: {
+          cep: formData.cep,
+          street: formData.street,
+          number: formData.number,
+          complement: formData.complement || undefined,
+          neighborhood: formData.neighborhood,
+          city: formData.city,
+          state: formData.state,
+          uf: formData.state.split(' ')[0], 
+        },
+      };
+
+      const success = await updateUser(updateData);
       
-      console.log('Dados do perfil que seriam atualizados:', {
-        ...formData,
-        userId: user.id
-      });
-      
-      setUpdateSuccess(true);
-      
-      setTimeout(() => {
-        setUpdateSuccess(false);
-        onUpdateSuccess?.();
-      }, 2000);
+      if (success) {
+        setUpdateSuccess(true);
+        
+        setTimeout(() => {
+          setUpdateSuccess(false);
+          onUpdateSuccess?.();
+        }, 2000);
+      } else {
+        setErrors({
+          general: 'Erro ao atualizar perfil. Tente novamente.',
+        });
+      }
       
     } catch (error) {
       console.error('Erro ao atualizar perfil:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Erro ao atualizar perfil. Tente novamente.';
       setErrors({
-        general: 'Erro ao atualizar perfil. Tente novamente.',
+        general: errorMessage,
       });
     } finally {
       setIsLoading(false);

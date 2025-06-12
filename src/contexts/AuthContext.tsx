@@ -126,6 +126,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const updateUser = async (userData: Partial<User>): Promise<boolean> => {
+  if (!user?.id) {
+    return false;
+  }
+
+  try {
+    const updatedUser = await UserService.updateUser(user.id, userData);
+    
+    const userWithoutPassword = getUserWithoutPassword(updatedUser);
+    localStorage.setUser(userWithoutPassword);
+    setUser(updatedUser);
+    
+    return true;
+  } catch (error) {
+    console.error('Erro ao atualizar usuário:', error);
+    return false;
+  }
+};
+
   const isAuthenticated = !isInitializing && !!user;
 
   if (isInitializing) {
@@ -167,6 +186,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       login,
       logout,
       register,
+      updateUser,
       isAuthenticated,
     }}>
       {children}
