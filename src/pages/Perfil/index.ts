@@ -1,0 +1,1 @@
+export { Perfil } from './Perfil';

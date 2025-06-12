@@ -5,6 +5,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Login, Register, Dashboard, CadastroLocal, LocaisColeta } from './pages';
 import NotFoundTemplate from './components/templates/NotFoundTemplate';
 import './styles/globals.css';
+import { Perfil } from './pages/Perfil';
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -72,6 +73,15 @@ const App: React.FC = () => {
               element={
                 <PrivateRoute>
                   <LocaisColeta />
+                </PrivateRoute>
+              } 
+            />
+
+            <Route 
+              path="/perfil" 
+              element={
+                <PrivateRoute>
+                  <Perfil />
                 </PrivateRoute>
               } 
             />

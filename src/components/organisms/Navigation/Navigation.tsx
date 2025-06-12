@@ -30,7 +30,7 @@ const navigationItems: NavigationItem[] = [
   {
     id: 'profile',
     label: 'Perfil',
-    path: '/profile',
+    path: '/perfil',
     icon: 'user',
     requiresAuth: true,
   },
