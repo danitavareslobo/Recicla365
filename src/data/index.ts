@@ -6,12 +6,6 @@ export {
 } from './users';
 
 export {
-  testRegistrationData,
-  mockRegistrationResponses,
-  registrationTestCases
-} from './testeRegister';
-
-export {
   mockCollectionPoints,
   getCollectionPointById,
   getCollectionPointsByUserId,
@@ -19,3 +13,4 @@ export {
   getCollectionPointsByCity,
   getRecentCollectionPoints
 } from './collectionPoints';
+

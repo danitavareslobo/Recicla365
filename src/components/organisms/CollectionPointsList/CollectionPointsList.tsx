@@ -147,15 +147,6 @@ export const CollectionPointsList: React.FC<CollectionPointsListProps> = ({
   return (
     <div className={listClasses}>
       <div className="collection-points-list__header">
-        <div className="collection-points-list__title-section">
-          <Typography variant="h2" className="collection-points-list__title">
-            Pontos de Coleta
-          </Typography>
-          <Typography variant="body2" color="secondary" className="collection-points-list__subtitle">
-            {filteredPoints.length} ponto{filteredPoints.length !== 1 ? 's' : ''} encontrado{filteredPoints.length !== 1 ? 's' : ''}
-          </Typography>
-        </div>
-
         <div className="collection-points-list__actions">
           {searchable && (
             <SearchBox

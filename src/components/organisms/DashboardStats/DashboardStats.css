@@ -328,3 +328,20 @@
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+.dashboard-stats__header {
+  text-align: left !important;
+}
+
+.dashboard-stats__title {
+  text-align: left !important;
+}
+
+.dashboard-stats__subtitle {
+  text-align: left !important;
+  margin: 0; 
+}
+
+.dashboard-stats__footer {
+  text-align: left !important;
+}

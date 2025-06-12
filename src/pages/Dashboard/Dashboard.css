@@ -1,7 +1,7 @@
 .dashboard {
   width: 100%;
-  max-width: none;
-  margin: 0;
+  max-width: 1400px; 
+  margin: 0 auto;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -44,23 +44,62 @@
   width: 100%;
 }
 
+.dashboard__points-header {
+  margin-bottom: var(--spacing-xl);
+  text-align: left;
+}
+
+.dashboard__section-title {
+  margin-bottom: var(--spacing-sm);
+  font-weight: 700 !important; 
+  color: var(--text-primary) !important; 
+  text-align: left !important;
+}
+
+.dashboard__section-subtitle {
+  max-width: 500px;
+  margin: 0;
+  line-height: 1.6;
+  text-align: left !important;
+}
+
 .dashboard__points-list {
   margin-bottom: var(--spacing-lg);
+}
+
+.dashboard__points-list .collection-points-list__grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: var(--spacing-lg) !important;
+  width: 100%;
+  max-width: none;
 }
 
 .dashboard__points-list .collection-points-list__card {
   cursor: default;
   min-height: 280px;
   height: 100%;
-}
-
-.dashboard__points-list .collection-points-list__grid {
-  grid-auto-rows: 1fr;
+  width: 100%;
+  max-width: none;
 }
 
 .dashboard__points-list .collection-points-list__card:hover {
   transform: none;
   box-shadow: 0 2px 8px var(--shadow);
+}
+
+.dashboard__empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-2xl);
+  text-align: center;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  min-height: 280px;
 }
 
 .dashboard__insights-section {
@@ -74,7 +113,7 @@
 
 .dashboard__insights-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr); 
   gap: var(--spacing-xl);
   padding: 0 var(--spacing-xl);
 }
@@ -134,18 +173,43 @@
   }
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 1400px) {
   .dashboard {
-    gap: var(--spacing-xl);
+    max-width: 1600px;
+  }
+  
+  .dashboard__points-list .collection-points-list__grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (max-width: 1399px) {
+  .dashboard {
+    max-width: 1200px;
   }
 
+  .dashboard__points-list .collection-points-list__grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  .dashboard {
+    gap: var(--spacing-xl);
+    max-width: 1000px;
+  }
+  
+  .dashboard__points-list .collection-points-list__grid {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+  
   .dashboard__insights-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; 
     gap: var(--spacing-lg);
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .dashboard {
     gap: var(--spacing-lg);
   }
@@ -159,6 +223,10 @@
 
   .dashboard__title {
     font-size: var(--font-size-2xl);
+  }
+
+  .dashboard__points-list .collection-points-list__grid {
+    grid-template-columns: repeat(2, 1fr); 
   }
 
   .dashboard__insights-section {
@@ -177,7 +245,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 767px) {
   .dashboard {
     gap: var(--spacing-md);
   }
@@ -188,6 +256,11 @@
 
   .dashboard__title {
     font-size: var(--font-size-xl);
+  }
+
+  .dashboard__points-list .collection-points-list__grid {
+    grid-template-columns: 1fr; 
+    gap: var(--spacing-md);
   }
 
   .dashboard__insights-section {
@@ -210,6 +283,28 @@
 
   .dashboard__skeleton--subtitle {
     width: 100%;
+  }
+}
+
+@media (max-width: 479px) {
+  .dashboard {
+    gap: var(--spacing-sm);
+  }
+
+  .dashboard__header {
+    padding: var(--spacing-sm) 0;
+  }
+
+  .dashboard__title {
+    font-size: var(--font-size-lg);
+  }
+
+  .dashboard__insights-section {
+    padding: var(--spacing-sm) 0;
+  }
+
+  .dashboard__insights-grid {
+    padding: 0 var(--spacing-sm);
   }
 }
 
@@ -255,4 +350,18 @@
     transform: none;
     box-shadow: none;
   }
+  
+  .dashboard__points-list .collection-points-list__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+[data-theme="dark"] .dashboard__insights-section {
+  background-color: rgba(45, 45, 45, 0.5);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .dashboard__insight-card {
+  background-color: var(--bg-primary);
+  border-color: var(--border);
 }

@@ -134,5 +134,34 @@ export interface AuthContextType {
   isAuthenticated: boolean;
 }
 
+export interface RegisteredUser extends User {
+  registeredVia: 'localStorage';
+}
+
+export interface UserStats {
+  total: number;
+  recentCount: number;
+  citiesCount: number;
+  genderDistribution: Record<string, number>;
+  mockUsersCount: number;
+  registeredUsersCount: number;
+}
+
+export interface UserValidation {
+  isValid: boolean;
+  message?: string;
+  field?: 'cpf' | 'email';
+}
+
+export interface UserRegistrationData {
+  name: string;
+  email: string;
+  cpf: string;
+  gender: 'M' | 'F' | 'Outro';
+  birthDate: string;
+  password: string;
+  address: Address;
+}
+
 export * from './component';
 export * from './form';

@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { User, AuthContextType } from '../types/index';
 import { localStorage } from '../utils';
-import { validateUserCredentials, getUserWithoutPassword } from '../data';
+import { validateUserCredentials, getUserWithoutPassword, mockUsers } from '../data';
+import { UserService } from '../services';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -22,8 +23,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isInitializing, setIsInitializing] = useState(true);
 
   useEffect(() => {
-    const initializeAuth = () => {
+    const initializeAuth = async () => {
       try {
+        await UserService.initializeWithMockData(mockUsers);
+        
         const storedUser = localStorage.getUser();
         const storedToken = localStorage.getToken();
         
@@ -59,9 +62,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         
         setUser(userWithoutPassword as User);
         return true;
-      } else {
-        return false;
       }
+
+      const registeredUsers = await UserService.getAllUsers();
+      const registeredUser = registeredUsers.find(user => 
+        user.email.toLowerCase() === email.toLowerCase() && user.password === password
+      );
+
+      if (registeredUser) {
+        const userWithoutPassword = getUserWithoutPassword(registeredUser);
+        
+        localStorage.setUser(userWithoutPassword);
+        localStorage.setToken(`token_${registeredUser.id}_${Date.now()}`);
+        
+        setUser(userWithoutPassword as User);
+        return true;
+      }
+
+      return false;
     } catch (error) {
       console.error('Erro no login:', error);
       return false;
@@ -75,14 +93,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const register = async (userData: Omit<User, 'id' | 'createdAt'>): Promise<boolean> => {
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      const newUser: User = {
-        ...userData,
-        id: Date.now().toString(),
-        createdAt: new Date().toISOString(),
-      };
+      const validation = await UserService.validateUniqueUser({
+        cpf: userData.cpf,
+        email: userData.email
+      });
 
+      if (!validation.isValid) {
+        throw new Error(validation.message || 'Dados já cadastrados');
+      }
+
+      const mockUserExists = mockUsers.some(user => 
+        user.email.toLowerCase() === userData.email.toLowerCase() || 
+        user.cpf === userData.cpf
+      );
+
+      if (mockUserExists) {
+        throw new Error('Email ou CPF já cadastrado no sistema');
+      }
+
+      const newUser = await UserService.createUser(userData);
+      
       const userWithoutPassword = getUserWithoutPassword(newUser);
       localStorage.setUser(userWithoutPassword);
       localStorage.setToken(`token_${newUser.id}_${Date.now()}`);
@@ -90,7 +122,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       return true;
     } catch (error) {
       console.error('Erro no registro:', error);
-      return false;
+      throw error; 
     }
   };
 
@@ -115,7 +147,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             animation: 'spin 1s linear infinite',
             margin: '0 auto 1rem'
           }}></div>
-          <p style={{ color: 'var(--text-primary, #333)' }}>Carregando...</p>
+          <p style={{ color: 'var(--text-primary, #333)' }}>Inicializando sistema...</p>
         </div>
         <style>
           {`
