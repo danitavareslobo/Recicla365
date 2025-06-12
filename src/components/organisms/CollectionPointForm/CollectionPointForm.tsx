@@ -5,14 +5,8 @@ import { FormField, FormProgress } from '../../molecules';
 import { useAuth } from '../../../contexts/AuthContext';
 import { ViaCepService, ValidationService, CollectionPointService } from '../../../services';
 import { FormUtils } from '../../../utils';
-import type { CollectionPoint, WasteType, CollectionPointFormData, WasteTypeOption } from '../../../types';
+import type { CollectionPoint, WasteType, CollectionPointFormData, WasteTypeOption, CollectionPointFormProps } from '../../../types';
 import './CollectionPointForm.css';
-
-interface CollectionPointFormProps {
-  initialData?: Partial<CollectionPoint>;
-  isEditing?: boolean;
-  className?: string;
-}
 
 const wasteTypeOptions: WasteTypeOption[] = [
   { value: 'Vidro', label: 'Vidro', color: '#22c55e' },
@@ -250,7 +244,7 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
   };
 
   const handleCancel = () => {
-    navigate('/dashboard');
+    navigate('/locais-coleta');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -307,14 +301,14 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
       
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      navigate('/dashboard', { 
-        state: { 
-          message: isEditing 
-            ? 'Ponto de coleta atualizado com sucesso!' 
-            : 'Ponto de coleta cadastrado com sucesso!',
-          type: 'success' 
-        }
-      });
+      navigate('/locais-coleta', { 
+  state: { 
+    message: isEditing 
+      ? 'Ponto de coleta atualizado com sucesso!' 
+      : 'Ponto de coleta cadastrado com sucesso!',
+    type: 'success' 
+  }
+});
 
     } catch (error) {
       const errorMessage = error instanceof Error 

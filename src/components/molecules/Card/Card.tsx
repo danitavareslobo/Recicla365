@@ -1,29 +1,7 @@
 import React from 'react';
 import { Typography, Icon } from '../../atoms';
+import type { CardProps, CardAction } from '../../../types';
 import './Card.css';
-
-export interface CardAction {
-  id: string;
-  label: string;
-  icon: 'sun' | 'moon' | 'user' | 'email' | 'password' | 'location' | 'trash' | 'edit' | 'plus' | 'search' | 'menu' | 'close' | 'recycle';
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
-  onClick: () => void;
-  disabled?: boolean;
-}
-
-interface CardProps {
-  children?: React.ReactNode;
-  title?: string;
-  subtitle?: string;
-  icon?: 'sun' | 'moon' | 'user' | 'email' | 'password' | 'location' | 'trash' | 'edit' | 'plus' | 'search' | 'menu' | 'close' | 'recycle';
-  variant?: 'default' | 'highlight' | 'stats';
-  clickable?: boolean;
-  className?: string;
-  onClick?: () => void;
-  actions?: CardAction[];
-  showActionsOnHover?: boolean;
-  description?: string;
-}
 
 export const Card: React.FC<CardProps> = ({
   children,

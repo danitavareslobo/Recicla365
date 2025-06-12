@@ -3,10 +3,7 @@ import { Button, Typography, Icon } from '../../atoms';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { useAuth } from '../../../contexts/AuthContext';
 import './Header.css';
-
-interface HeaderProps {
-  className?: string;
-}
+import type { HeaderProps } from '../../../types';
 
 export const Header: React.FC<HeaderProps> = ({ className = '' }) => {
   const { theme, toggleTheme } = useTheme();

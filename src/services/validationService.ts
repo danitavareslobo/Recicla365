@@ -1,8 +1,4 @@
-import type { CollectionPointFormData } from '../types';
-
-export interface ValidationErrors {
-  [key: string]: string;
-}
+import type { CollectionPointFormData, ValidationErrors } from '../types';
 
 export class ValidationService {
   static validateCollectionPointForm(data: CollectionPointFormData): ValidationErrors {

@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Typography, Icon } from '../../atoms';
 import { Card, SearchBox } from '../../molecules';
-import type { CardAction } from '../../molecules/Card/Card';
-import type { CollectionPoint, WasteType } from '../../../types';
+import type { 
+  CollectionPointsListProps, 
+  CardAction, 
+  CollectionPoint, 
+  WasteType 
+} from '../../../types';
 import './CollectionPointsList.css';
-
-interface CollectionPointsListProps {
-  collectionPoints?: CollectionPoint[];
-  isLoading?: boolean;
-  showActions?: boolean;
-  searchable?: boolean;
-  className?: string;
-  onView?: (point: CollectionPoint) => void;
-  onEdit?: (point: CollectionPoint) => void;
-  onDelete?: (point: CollectionPoint) => void;
-  onCreate?: () => void;
-}
 
 export const CollectionPointsList: React.FC<CollectionPointsListProps> = ({
   collectionPoints = [],
@@ -212,7 +204,7 @@ export const CollectionPointsList: React.FC<CollectionPointsListProps> = ({
               title={point.name}
               subtitle={formatAddress(point.address)}
               icon="location"
-              clickable={!!onView && !showActions} 
+              clickable={!!onView && !showActions}
               onClick={showActions ? undefined : () => onView?.(point)}
               actions={createCardActions(point)}
               showActionsOnHover={true}

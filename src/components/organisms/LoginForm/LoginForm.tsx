@@ -3,23 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Typography, Icon } from '../../atoms';
 import { FormField } from '../../molecules';
 import { useAuth } from '../../../contexts/AuthContext';
+import type { LoginFormProps, LoginFormData, FormErrors } from '../../../types';
 import './LoginForm.css';
-
-interface LoginFormProps {
-  onRegisterClick?: () => void;
-  className?: string;
-}
-
-interface LoginFormData {
-  email: string;
-  password: string;
-}
-
-interface FormErrors {
-  email?: string;
-  password?: string;
-  general?: string;
-}
 
 export const LoginForm: React.FC<LoginFormProps> = ({
   onRegisterClick,
@@ -64,10 +49,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     }));
 
     if (errors[field]) {
-      setErrors(prev => ({
-        ...prev,
-        [field]: undefined,
-      }));
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
     }
   };
 

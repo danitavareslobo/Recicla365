@@ -1,15 +1,7 @@
 import React from 'react';
 import { Typography, Icon } from '../../atoms';
 import './AuthTemplate.css';
-
-interface AuthTemplateProps {
-  children: React.ReactNode;
-  title?: string;
-  subtitle?: string;
-  showBranding?: boolean;
-  backgroundVariant?: 'default' | 'gradient' | 'pattern';
-  className?: string;
-}
+import type { AuthTemplateProps } from '../../../types';
 
 export const AuthTemplate: React.FC<AuthTemplateProps> = ({
   children,

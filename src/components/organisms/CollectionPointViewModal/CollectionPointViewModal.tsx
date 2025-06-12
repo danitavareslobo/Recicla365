@@ -2,14 +2,7 @@ import React from 'react';
 import { Typography, Button, Icon } from '../../atoms';
 import type { CollectionPoint, WasteType } from '../../../types';
 import './CollectionPointViewModal.css';
-
-interface CollectionPointViewModalProps {
-  point: CollectionPoint | null;
-  isOpen: boolean;
-  onClose: () => void;
-  onEdit?: (point: CollectionPoint) => void;
-  className?: string;
-}
+import type { CollectionPointViewModalProps } from '../../../types';
 
 const wasteTypeColors: Record<WasteType, string> = {
   'Vidro': '#22c55e',

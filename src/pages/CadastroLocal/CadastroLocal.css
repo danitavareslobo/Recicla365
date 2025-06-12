@@ -1,75 +1,179 @@
-.cadastro-local {
-  width: 100vw;
-  min-height: calc(100vh - var(--header-height, 80px) - var(--navigation-height, 60px));
-  margin: 0;
-  padding: 0;
-  background: var(--bg-primary);
-  overflow-x: hidden;
-}
-
-.cadastro-local__container {
+.cadastro-local-page {
   width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: var(--spacing-xl);
-  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
 }
 
-@media (max-width: 1200px) {
-  .cadastro-local {
-    gap: var(--spacing-lg);
-  }
+.cadastro-local-page__message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: var(--border-radius-lg);
+  margin-bottom: 2rem;
+  border: 1px solid;
+  animation: slideDown 0.3s ease;
+}
 
-  .cadastro-local__container {
-    max-width: 1000px;
-    padding: var(--spacing-lg);
+.cadastro-local-page__message--success {
+  background-color: var(--color-success-light, #f0f9f0);
+  border-color: var(--color-success, #22c55e);
+  color: var(--color-success-dark, #166534);
+}
+
+.cadastro-local-page__message--info {
+  background-color: var(--color-info-light, #f0f4f8);
+  border-color: var(--color-info, #3b82f6);
+  color: var(--color-info-dark, #1e40af);
+}
+
+.cadastro-local-page__message--error {
+  background-color: var(--color-error-light, #fef2f2);
+  border-color: var(--color-error, #dc2626);
+  color: var(--color-error-dark, #991b1b);
+}
+
+.cadastro-local-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  width: 100%;
+}
+
+.cadastro-local-loading__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  max-width: 400px;
+}
+
+.cadastro-local-loading__icon {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.cadastro-local-loading__spinner {
+  margin-top: 1rem;
+}
+
+.cadastro-local__spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-border);
+  border-top: 3px solid var(--color-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.cadastro-local-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  width: 100%;
+}
+
+.cadastro-local-error__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  max-width: 500px;
+  padding: 2rem;
+}
+
+.cadastro-local-error__icon {
+  opacity: 0.7;
+}
+
+.cadastro-local-error__actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 @media (max-width: 768px) {
-  .cadastro-local {
-    gap: var(--spacing-md);
+  .cadastro-local-page__message {
+    padding: 0.875rem 1rem;
+    margin-bottom: 1.5rem;
   }
-
-  .cadastro-local__container {
-    padding: var(--spacing-md);
+  
+  .cadastro-local-loading__content,
+  .cadastro-local-error__content {
+    padding: 1rem;
   }
-}
-
-@media (max-width: 480px) {
-  .cadastro-local {
-    gap: var(--spacing-sm);
+  
+  .cadastro-local-error__actions {
+    flex-direction: column;
+    width: 100%;
   }
-
-  .cadastro-local__container {
-    padding: var(--spacing-sm);
-  }
-}
-
-[data-theme="dark"] .cadastro-local {
-  background: var(--bg-primary);
-}
-
-@media print {
-  .cadastro-local {
-    background: white;
-    color: black;
-  }
-
-  .cadastro-local__container {
-    padding: 0;
-    max-width: none;
+  
+  .cadastro-local-error__actions .button {
+    width: 100%;
+    justify-content: center;
   }
 }
 
-@media (prefers-contrast: high) {
-  .cadastro-local {
-    border: 2px solid var(--border);
-  }
+[data-theme="dark"] .cadastro-local-page__message--success {
+  background-color: rgba(34, 197, 94, 0.1);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+[data-theme="dark"] .cadastro-local-page__message--info {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: var(--color-info);
+  color: var(--color-info);
+}
+
+[data-theme="dark"] .cadastro-local-page__message--error {
+  background-color: rgba(220, 38, 38, 0.1);
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+[data-theme="dark"] .cadastro-local__spinner {
+  border-color: var(--color-border-dark);
+  border-top-color: var(--color-accent);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cadastro-local {
-    transition: none;
+  .cadastro-local-page__message,
+  .cadastro-local-loading__icon,
+  .cadastro-local__spinner {
+    animation: none;
   }
 }

@@ -1,16 +1,6 @@
 import React from 'react';
 import './Typography.css';
-
-interface TypographyProps {
-  children: React.ReactNode;
-  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'body1' | 'body2' | 'caption' | 'overline';
-  component?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
-  color?: 'primary' | 'secondary' | 'accent' | 'error' | 'success';
-  align?: 'left' | 'center' | 'right';
-  weight?: 'light' | 'normal' | 'medium' | 'semibold' | 'bold';
-  className?: string;
-  style?: React.CSSProperties;
-}
+import type { TypographyProps } from '../../../types';
 
 export const Typography: React.FC<TypographyProps> = ({
   children,

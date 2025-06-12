@@ -105,7 +105,7 @@
 .collection-points-list__meta {
   padding-top: var(--spacing-sm);
   border-top: 1px solid var(--border);
-  margin-top: auto; /* Push to bottom */
+  margin-top: auto; 
 }
 
 .collection-points-list__empty {
@@ -327,4 +327,9 @@
     break-inside: avoid;
     border: 1px solid #000;
   }
+}
+
+.dashboard-template .collection-points-list {
+  padding: 0;
+  max-width: none;
 }

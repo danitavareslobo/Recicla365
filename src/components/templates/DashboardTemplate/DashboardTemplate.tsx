@@ -2,13 +2,7 @@ import React, { useState } from 'react';
 import { Header, Navigation } from '../../organisms';
 import { Button, Icon } from '../../atoms';
 import './DashboardTemplate.css';
-
-interface DashboardTemplateProps {
-  children: React.ReactNode;
-  showSidebar?: boolean;
-  sidebarCollapsible?: boolean;
-  className?: string;
-}
+import type { DashboardTemplateProps } from '../../../types';
 
 export const DashboardTemplate: React.FC<DashboardTemplateProps> = ({
   children,

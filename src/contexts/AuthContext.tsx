@@ -19,12 +19,26 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isInitializing, setIsInitializing] = useState(true);
 
   useEffect(() => {
     const initializeAuth = () => {
-      const storedUser = localStorage.getUser();
-      if (storedUser) {
-        setUser(storedUser as User);
+      try {
+        const storedUser = localStorage.getUser();
+        const storedToken = localStorage.getToken();
+        
+        if (storedUser && storedToken) {
+          setUser(storedUser as User);
+        } else {
+          localStorage.clear();
+          setUser(null);
+        }
+      } catch (error) {
+        console.error('Erro ao inicializar autenticação:', error);
+        localStorage.clear();
+        setUser(null);
+      } finally {
+        setIsInitializing(false);
       }
     };
 
@@ -71,6 +85,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       const userWithoutPassword = getUserWithoutPassword(newUser);
       localStorage.setUser(userWithoutPassword);
+      localStorage.setToken(`token_${newUser.id}_${Date.now()}`);
       setUser(newUser);
       return true;
     } catch (error) {
@@ -79,7 +94,40 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const isAuthenticated = !!user;
+  const isAuthenticated = !isInitializing && !!user;
+
+  if (isInitializing) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        backgroundColor: 'var(--bg-primary, #f5f5f5)'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{
+            width: '40px',
+            height: '40px',
+            border: '4px solid #f3f3f3',
+            borderTop: '4px solid #16a34a',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 1rem'
+          }}></div>
+          <p style={{ color: 'var(--text-primary, #333)' }}>Carregando...</p>
+        </div>
+        <style>
+          {`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}
+        </style>
+      </div>
+    );
+  }
 
   return (
     <AuthContext.Provider value={{

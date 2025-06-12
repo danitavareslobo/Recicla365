@@ -1,13 +1,7 @@
 import React from 'react';
 import { Typography } from '../';
 import './LoadingSpinner.css';
-
-interface LoadingSpinnerProps {
-  size?: 'sm' | 'md' | 'lg';
-  message?: string;
-  overlay?: boolean;
-  className?: string;
-}
+import type { LoadingSpinnerProps } from '../../../types';
 
 export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   size = 'md',

@@ -3,19 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Typography, Icon } from '../../atoms';
 import { useAuth } from '../../../contexts/AuthContext';
 import './Navigation.css';
-
-interface NavigationItem {
-  id: string;
-  label: string;
-  path: string;
-  icon: 'sun' | 'moon' | 'user' | 'email' | 'password' | 'location' | 'trash' | 'edit' | 'plus' | 'search' | 'menu' | 'close' | 'recycle';
-  requiresAuth?: boolean;
-}
-
-interface NavigationProps {
-  className?: string;
-  variant?: 'horizontal' | 'vertical' | 'mobile';
-}
+import type { NavigationProps, NavigationItem } from '../../../types';
 
 const navigationItems: NavigationItem[] = [
   {
@@ -28,7 +16,7 @@ const navigationItems: NavigationItem[] = [
   {
     id: 'collection-points-list',
     label: 'Pontos de Coleta',
-    path: '/collection-points',
+    path: '/locais-coleta',              
     icon: 'location',
     requiresAuth: true,
   },
@@ -76,6 +64,9 @@ export const Navigation: React.FC<NavigationProps> = ({
     }
     if (path === '/cadastro-local') {
       return location.pathname === '/cadastro-local';
+    }
+    if (path === '/locais-coleta') {          
+      return location.pathname === '/locais-coleta';
     }
     return location.pathname.startsWith(path);
   };

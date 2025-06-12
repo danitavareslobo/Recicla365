@@ -19,6 +19,16 @@
   --border-dark: #404040;
   --shadow-dark: rgba(0, 0, 0, 0.3);
 
+  /* Cores de Estado (Erro, Sucesso, Aviso) */
+  --error-light: #dc2626;
+  --error-dark: #ef4444;
+  --error-bg-light: #fef2f2;
+  --error-bg-dark: #2d1a1a;
+  --success-light: #16a34a;
+  --success-dark: #22c55e;
+  --warning-light: #d97706;
+  --warning-dark: #f59e0b;
+
   /* Tipografia */
   --font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-size-xs: 0.75rem;
@@ -42,12 +52,18 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
+  --radius-full: 9999px;
 
   /* Breakpoints */
   --breakpoint-sm: 640px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
+
+  /* Transições */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
 }
 
 [data-theme="light"] {
@@ -59,6 +75,10 @@
   --accent-hover: var(--accent-hover-light);
   --border: var(--border-light);
   --shadow: var(--shadow-light);
+  --error: var(--error-light);
+  --error-bg: var(--error-bg-light);
+  --success: var(--success-light);
+  --warning: var(--warning-light);
 }
 
 [data-theme="dark"] {
@@ -70,4 +90,8 @@
   --accent-hover: var(--accent-hover-dark);
   --border: var(--border-dark);
   --shadow: var(--shadow-dark);
+  --error: var(--error-dark);
+  --error-bg: var(--error-bg-dark);
+  --success: var(--success-dark);
+  --warning: var(--warning-dark);
 }

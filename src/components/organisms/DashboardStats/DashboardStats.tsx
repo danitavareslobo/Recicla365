@@ -2,27 +2,7 @@ import React from 'react';
 import { Typography, Icon } from '../../atoms';
 import { Card } from '../../molecules';
 import './DashboardStats.css';
-
-interface StatCard {
-  id: string;
-  title: string;
-  value: string | number;
-  subtitle?: string;
-  icon: 'sun' | 'moon' | 'user' | 'email' | 'password' | 'location' | 'trash' | 'edit' | 'plus' | 'search' | 'menu' | 'close' | 'recycle';
-  variant?: 'default' | 'highlight' | 'stats';
-  trend?: {
-    direction: 'up' | 'down' | 'neutral';
-    value: string;
-    label: string;
-  };
-  onClick?: () => void;
-}
-
-interface DashboardStatsProps {
-  stats?: StatCard[];
-  isLoading?: boolean;
-  className?: string;
-}
+import type { DashboardStatsProps, StatCard } from '../../../types';
 
 const defaultStats: StatCard[] = [
   {

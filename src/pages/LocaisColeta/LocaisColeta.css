@@ -1,0 +1,163 @@
+.locais-coleta-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.locais-coleta-page__feedback {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: var(--border-radius-lg);
+  margin-bottom: 2rem;
+  border: 1px solid;
+  animation: slideInDown 0.3s ease;
+  position: relative;
+}
+
+.locais-coleta-page__feedback--success {
+  background-color: var(--color-success-light, #f0f9f0);
+  border-color: var(--color-success, #22c55e);
+  color: var(--color-success-dark, #166534);
+}
+
+.locais-coleta-page__feedback--error {
+  background-color: var(--color-error-light, #fef2f2);
+  border-color: var(--color-error, #dc2626);
+  color: var(--color-error-dark, #991b1b);
+}
+
+.locais-coleta-page__feedback--info {
+  background-color: var(--color-info-light, #f0f4f8);
+  border-color: var(--color-info, #3b82f6);
+  color: var(--color-info-dark, #1e40af);
+}
+
+.locais-coleta-page__feedback-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: var(--border-radius-sm);
+  transition: all 0.2s ease;
+  color: inherit;
+  opacity: 0.7;
+}
+
+.locais-coleta-page__feedback-close:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.locais-coleta-page__error {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background-color: var(--color-error-light, #fef2f2);
+  border: 1px solid var(--color-error, #dc2626);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: 2rem;
+  color: var(--color-error-dark, #991b1b);
+}
+
+.locais-coleta-page__error button {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-error);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.locais-coleta-page__error button:hover {
+  background-color: var(--color-error-dark, #991b1b);
+  transform: translateY(-1px);
+}
+
+.locais-coleta-page__list {
+  width: 100%;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .locais-coleta-page {
+    padding: var(--spacing-md);
+  }
+  
+  .locais-coleta-page__feedback,
+  .locais-coleta-page__error {
+    padding: 0.875rem 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .locais-coleta-page__feedback-close {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    align-self: flex-start;
+  }
+  
+  .locais-coleta-page__error button {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+[data-theme="dark"] .locais-coleta-page__feedback--success {
+  background-color: rgba(34, 197, 94, 0.1);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+[data-theme="dark"] .locais-coleta-page__feedback--error {
+  background-color: rgba(220, 38, 38, 0.1);
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+[data-theme="dark"] .locais-coleta-page__feedback--info {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: var(--color-info);
+  color: var(--color-info);
+}
+
+[data-theme="dark"] .locais-coleta-page__error {
+  background-color: rgba(220, 38, 38, 0.1);
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .locais-coleta-page__feedback {
+    animation: none;
+  }
+}
+
+locais-coleta-page__feedback-close:focus,
+.locais-coleta-page__error button:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}

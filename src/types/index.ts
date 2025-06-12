@@ -45,6 +45,8 @@ export type WasteType =
   | 'Eletrônicos'
   | 'Óleo';
 
+export type Theme = 'light' | 'dark';
+
 export interface ViaCepResponse {
   cep: string;
   logradouro: string;
@@ -53,6 +55,42 @@ export interface ViaCepResponse {
   localidade: string;
   uf: string;
   erro?: boolean;
+}
+
+export interface ValidationErrors {
+  [key: string]: string;
+}
+
+export interface CreateCollectionPointData {
+  name: string;
+  description: string;
+  userId: string;
+  address: Address;
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  acceptedWastes: string[];
+}
+
+export interface ApiResponse<T> {
+  data: T;
+  success: boolean;
+  message?: string;
+  errors?: ValidationErrors;
+}
+
+export interface AuthResponse {
+  success: boolean;
+  user?: Omit<User, 'password'>;
+  token?: string;
+  message?: string;
+}
+
+export interface TestResult {
+  passed: boolean;
+  message: string;
+  details?: any;
 }
 
 export interface CollectionPointFormData {
@@ -76,7 +114,12 @@ export interface WasteTypeOption {
   color: string;
 }
 
-export type Theme = 'light' | 'dark';
+export interface FormProgress {
+  percentage: number;
+  completed: number;
+  total: number;
+  missingFields: string[];
+}
 
 export interface ThemeContextType {
   theme: Theme;
@@ -90,3 +133,6 @@ export interface AuthContextType {
   register: (userData: Omit<User, 'id' | 'createdAt'>) => Promise<boolean>;
   isAuthenticated: boolean;
 }
+
+export * from './component';
+export * from './form';
