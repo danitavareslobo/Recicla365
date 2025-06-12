@@ -5,7 +5,7 @@ import {
   CollectionPointViewModal, 
   ConfirmDeleteModal 
 } from '../../components/organisms';
-import { DashboardTemplate } from '../../components/templates'; 
+import { DashboardTemplate } from '../../components/templates';
 import { useAuth } from '../../contexts/AuthContext';
 import { CollectionPointService } from '../../services';
 import type { CollectionPoint } from '../../types';
@@ -52,7 +52,7 @@ export const LocaisColeta: React.FC = () => {
   };
 
   const handleEdit = (point: CollectionPoint) => {
-    navigate(`/cadastro-local?edit=${point.id}`);
+    navigate(`/cadastro-local/editar/${point.id}`);  
   };
 
   const handleDelete = (point: CollectionPoint) => {

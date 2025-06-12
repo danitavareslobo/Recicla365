@@ -15,6 +15,137 @@
   box-sizing: border-box;
 }
 
+.cadastro-local__message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: var(--border-radius-lg);
+  margin-bottom: 2rem;
+  border: 1px solid;
+  animation: slideDown 0.3s ease;
+}
+
+.cadastro-local__message--success {
+  background-color: var(--color-success-light, #f0f9f0);
+  border-color: var(--color-success, #22c55e);
+  color: var(--color-success-dark, #166534);
+}
+
+.cadastro-local__message--info {
+  background-color: var(--color-info-light, #f0f4f8);
+  border-color: var(--color-info, #3b82f6);
+  color: var(--color-info-dark, #1e40af);
+}
+
+.cadastro-local__message--error {
+  background-color: var(--color-error-light, #fef2f2);
+  border-color: var(--color-error, #dc2626);
+  color: var(--color-error-dark, #991b1b);
+}
+
+.cadastro-local__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.cadastro-local__loading-icon {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.cadastro-local__loading-spinner {
+  margin-top: 1rem;
+}
+
+.cadastro-local__spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-border);
+  border-top: 3px solid var(--color-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.cadastro-local__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  gap: 1.5rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.cadastro-local__error-icon {
+  opacity: 0.7;
+}
+
+.cadastro-local__error-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cadastro-local__error-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius-lg);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cadastro-local__error-button:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-1px);
+}
+
+.cadastro-local__error-button:active {
+  transform: translateY(0);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @media (max-width: 1200px) {
   .cadastro-local {
     gap: var(--spacing-lg);
@@ -34,6 +165,26 @@
   .cadastro-local__container {
     padding: var(--spacing-md);
   }
+  
+  .cadastro-local__loading,
+  .cadastro-local__error {
+    padding: 2rem 1rem;
+  }
+  
+  .cadastro-local__error-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .cadastro-local__error-actions .button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cadastro-local__message {
+    padding: 0.875rem 1rem;
+    margin-bottom: 1.5rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -48,6 +199,37 @@
 
 [data-theme="dark"] .cadastro-local {
   background: var(--bg-primary);
+}
+
+[data-theme="dark"] .cadastro-local__message--success {
+  background-color: rgba(34, 197, 94, 0.1);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+[data-theme="dark"] .cadastro-local__message--info {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: var(--color-info);
+  color: var(--color-info);
+}
+
+[data-theme="dark"] .cadastro-local__message--error {
+  background-color: rgba(220, 38, 38, 0.1);
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+[data-theme="dark"] .cadastro-local__spinner {
+  border-color: var(--color-border-dark);
+  border-top-color: var(--color-accent);
+}
+
+[data-theme="dark"] .cadastro-local__error-button {
+  background-color: var(--color-accent);
+}
+
+[data-theme="dark"] .cadastro-local__error-button:hover {
+  background-color: var(--color-accent-hover);
 }
 
 @media print {
@@ -71,5 +253,14 @@
 @media (prefers-reduced-motion: reduce) {
   .cadastro-local {
     transition: none;
+  }
+  
+  .cadastro-local__loading-icon,
+  .cadastro-local__spinner {
+    animation: none;
+  }
+  
+  .cadastro-local__message {
+    animation: none;
   }
 }

@@ -58,6 +58,15 @@ const App: React.FC = () => {
             />
 
             <Route 
+              path="/cadastro-local/editar/:id" 
+              element={
+                <PrivateRoute>
+                  <CadastroLocal />
+                </PrivateRoute>
+              } 
+            />
+
+            <Route 
               path="/locais-coleta" 
               element={
                 <PrivateRoute>

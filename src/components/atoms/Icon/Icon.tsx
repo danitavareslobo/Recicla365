@@ -2,9 +2,9 @@ import React from 'react';
 import './Icon.css';
 
 interface IconProps {
-  name: 'sun' | 'moon' | 'user' | 'email' | 'password' | 'location' | 'trash' | 'edit' | 'plus' | 'search' | 'menu' | 'close' | 'recycle';
+  name: 'sun' | 'moon' | 'user' | 'email' | 'password' | 'location' | 'trash' | 'edit' | 'plus' | 'search' | 'menu' | 'close' | 'recycle' | 'info' | 'check' | 'refresh' | 'arrow-left';
   size?: 'sm' | 'md' | 'lg' | 'xl';
-  color?: 'primary' | 'secondary' | 'accent' | 'white' | 'error' | 'success';
+  color?: 'primary' | 'secondary' | 'accent' | 'white' | 'error' | 'success' | 'info';
   className?: string;
   onClick?: () => void;
 }
@@ -35,6 +35,14 @@ const iconPaths = {
   close: 'M6 18L18 6M6 6l12 12',
   
   recycle: 'M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99',
+  
+  info: 'M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z',
+  
+  check: 'M4.5 12.75l6 6 9-13.5',
+  
+  refresh: 'M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99',
+  
+  'arrow-left': 'M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18',
 };
 
 export const Icon: React.FC<IconProps> = ({
