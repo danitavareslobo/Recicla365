@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   CollectionPointsList, 
   CollectionPointViewModal, 
   ConfirmDeleteModal 
 } from '../../components/organisms';
 import { DashboardTemplate } from '../../components/templates';
+import { Typography, Icon } from '../../components/atoms';
 import { useAuth } from '../../contexts/AuthContext';
 import { CollectionPointService } from '../../services';
 import type { CollectionPoint } from '../../types';
@@ -13,6 +14,7 @@ import './LocaisColeta.css';
 
 export const LocaisColeta: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
   
   const [points, setPoints] = useState<CollectionPoint[]>([]);
@@ -23,6 +25,27 @@ export const LocaisColeta: React.FC = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState<CollectionPoint | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const [feedbackType, setFeedbackType] = useState<'success' | 'error' | 'info'>('success');
+
+  useEffect(() => {
+    const message = location.state?.message;
+    const type = location.state?.type || 'success';
+    
+    if (message) {
+      setFeedbackMessage(message);
+      setFeedbackType(type);
+      
+      navigate(location.pathname, { replace: true, state: {} });
+      
+      const timer = setTimeout(() => {
+        setFeedbackMessage(null);
+      }, 5000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [location.state, navigate, location.pathname]);
 
   useEffect(() => {
     loadCollectionPoints();
@@ -52,7 +75,7 @@ export const LocaisColeta: React.FC = () => {
   };
 
   const handleEdit = (point: CollectionPoint) => {
-    navigate(`/cadastro-local/editar/${point.id}`);  
+    navigate(`/cadastro-local/editar/${point.id}`);
   };
 
   const handleDelete = (point: CollectionPoint) => {
@@ -74,7 +97,12 @@ export const LocaisColeta: React.FC = () => {
       setDeleteModalOpen(false);
       setSelectedPoint(null);
       
-      console.log('Ponto de coleta excluído com sucesso');
+      setFeedbackMessage('Ponto de coleta excluído com sucesso!');
+      setFeedbackType('success');
+      
+      setTimeout(() => {
+        setFeedbackMessage(null);
+      }, 5000);
       
     } catch (err) {
       console.error('Erro ao excluir ponto de coleta:', err);
@@ -107,13 +135,42 @@ export const LocaisColeta: React.FC = () => {
     loadCollectionPoints();
   };
 
+  const handleCloseFeedback = () => {
+    setFeedbackMessage(null);
+  };
+
   return (
     <DashboardTemplate>
       <div className="locais-coleta-page">
+        {feedbackMessage && (
+          <div className={`locais-coleta-page__feedback locais-coleta-page__feedback--${feedbackType}`}>
+            <Icon 
+              name={feedbackType === 'success' ? 'check' : feedbackType === 'error' ? 'close' : 'info'} 
+              size="sm" 
+              color={feedbackType === 'success' ? 'success' : feedbackType === 'error' ? 'error' : 'info'} 
+            />
+            <Typography variant="body2" color={feedbackType === 'success' ? 'success' : feedbackType === 'error' ? 'error' : 'primary'}>
+              {feedbackMessage}
+            </Typography>
+            <button 
+              onClick={handleCloseFeedback}
+              className="locais-coleta-page__feedback-close"
+            >
+              <Icon name="close" size="sm" />
+            </button>
+          </div>
+        )}
+
         {error && (
           <div className="locais-coleta-page__error">
-            <p>{error}</p>
-            <button onClick={handleRetry}>Tentar Novamente</button>
+            <Icon name="close" size="sm" color="error" />
+            <Typography variant="body2" color="error">
+              {error}
+            </Typography>
+            <button onClick={handleRetry}>
+              <Icon name="refresh" size="sm" />
+              Tentar Novamente
+            </button>
           </div>
         )}
 

@@ -250,7 +250,7 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
   };
 
   const handleCancel = () => {
-    navigate('/dashboard');
+    navigate('/locais-coleta');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -307,14 +307,14 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
       
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      navigate('/dashboard', { 
-        state: { 
-          message: isEditing 
-            ? 'Ponto de coleta atualizado com sucesso!' 
-            : 'Ponto de coleta cadastrado com sucesso!',
-          type: 'success' 
-        }
-      });
+      navigate('/locais-coleta', { 
+  state: { 
+    message: isEditing 
+      ? 'Ponto de coleta atualizado com sucesso!' 
+      : 'Ponto de coleta cadastrado com sucesso!',
+    type: 'success' 
+  }
+});
 
     } catch (error) {
       const errorMessage = error instanceof Error 
