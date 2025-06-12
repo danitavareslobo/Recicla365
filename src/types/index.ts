@@ -45,6 +45,8 @@ export type WasteType =
   | 'Eletrônicos'
   | 'Óleo';
 
+export type Theme = 'light' | 'dark';
+
 export interface ViaCepResponse {
   cep: string;
   logradouro: string;
@@ -76,8 +78,6 @@ export interface WasteTypeOption {
   color: string;
 }
 
-export type Theme = 'light' | 'dark';
-
 export interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
@@ -90,3 +90,6 @@ export interface AuthContextType {
   register: (userData: Omit<User, 'id' | 'createdAt'>) => Promise<boolean>;
   isAuthenticated: boolean;
 }
+
+export * from './component';
+export * from './form';
