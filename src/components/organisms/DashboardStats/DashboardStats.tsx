@@ -4,63 +4,8 @@ import { Card } from '../../molecules';
 import './DashboardStats.css';
 import type { DashboardStatsProps, StatCard } from '../../../types';
 
-const defaultStats: StatCard[] = [
-  {
-    id: 'total-users',
-    title: 'Usuários Ativos',
-    value: '1,234',
-    subtitle: 'Total de usuários cadastrados',
-    icon: 'user',
-    variant: 'stats',
-    trend: {
-      direction: 'up',
-      value: '+12%',
-      label: 'vs mês anterior',
-    },
-  },
-  {
-    id: 'collection-points',
-    title: 'Pontos de Coleta',
-    value: '567',
-    subtitle: 'Locais cadastrados',
-    icon: 'location',
-    variant: 'stats',
-    trend: {
-      direction: 'up',
-      value: '+8%',
-      label: 'vs mês anterior',
-    },
-  },
-  {
-    id: 'recycled-materials',
-    title: 'Materiais Reciclados',
-    value: '8,901',
-    subtitle: 'Itens processados',
-    icon: 'recycle',
-    variant: 'highlight',
-    trend: {
-      direction: 'up',
-      value: '+23%',
-      label: 'vs mês anterior',
-    },
-  },
-  {
-    id: 'eco-impact',
-    title: 'Impacto Ecológico',
-    value: '15.7 ton',
-    subtitle: 'CO₂ evitado',
-    icon: 'recycle',
-    variant: 'stats',
-    trend: {
-      direction: 'up',
-      value: '+18%',
-      label: 'vs mês anterior',
-    },
-  },
-];
-
 export const DashboardStats: React.FC<DashboardStatsProps> = ({
-  stats = defaultStats,
+  stats = [],
   isLoading = false,
   className = '',
 }) => {
@@ -126,6 +71,31 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({
     );
   }
 
+  if (!stats || stats.length === 0) {
+    return (
+      <div className={dashboardStatsClasses}>
+        <div className="dashboard-stats__header">
+          <Typography variant="h2" className="dashboard-stats__title">
+            Estatísticas da Plataforma
+          </Typography>
+          <Typography variant="body2" color="secondary" className="dashboard-stats__subtitle">
+            Carregando estatísticas baseadas nos dados reais...
+          </Typography>
+        </div>
+        
+        <div className="dashboard-stats__empty">
+          <Icon name="recycle" size="xl" color="secondary" />
+          <Typography variant="h4" color="secondary">
+            Estatísticas não disponíveis
+          </Typography>
+          <Typography variant="body2" color="secondary">
+            Aguarde enquanto calculamos os dados do sistema...
+          </Typography>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={dashboardStatsClasses}>
       <div className="dashboard-stats__header">
@@ -133,7 +103,7 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({
           Estatísticas da Plataforma
         </Typography>
         <Typography variant="body2" color="secondary" className="dashboard-stats__subtitle">
-          Acompanhe o impacto do Recicla365 em tempo real
+          Dados reais baseados em usuários e pontos de coleta cadastrados
         </Typography>
       </div>
       
