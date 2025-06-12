@@ -3,34 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Typography, Icon } from '../../atoms';
 import { FormField } from '../../molecules';
 import { useAuth } from '../../../contexts/AuthContext';
-import type { User, ViaCepResponse } from '../../../types';
+import type { FormErrors, RegisterFormData, RegisterFormProps, User, ViaCepResponse } from '../../../types';
 import './RegisterForm.css';
-
-interface RegisterFormProps {
-  onLoginClick?: () => void;
-  className?: string;
-}
-
-interface RegisterFormData {
-  name: string;
-  email: string;
-  cpf: string;
-  gender: 'M' | 'F' | 'Outro';
-  birthDate: string;
-  password: string;
-  confirmPassword: string;
-  cep: string;
-  street: string;
-  number: string;
-  complement?: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-}
-
-interface FormErrors {
-  [key: string]: string;
-}
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({
   onLoginClick,

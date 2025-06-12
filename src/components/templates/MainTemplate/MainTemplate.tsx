@@ -1,12 +1,6 @@
 import React from 'react';
 import './MainTemplate.css';
-
-interface MainTemplateProps {
-  children: React.ReactNode;
-  variant?: 'default' | 'centered' | 'fullscreen';
-  showScrollToTop?: boolean;
-  className?: string;
-}
+import type { MainTemplateProps } from '../../../types';
 
 export const MainTemplate: React.FC<MainTemplateProps> = ({
   children,

@@ -5,14 +5,8 @@ import { FormField, FormProgress } from '../../molecules';
 import { useAuth } from '../../../contexts/AuthContext';
 import { ViaCepService, ValidationService, CollectionPointService } from '../../../services';
 import { FormUtils } from '../../../utils';
-import type { CollectionPoint, WasteType, CollectionPointFormData, WasteTypeOption } from '../../../types';
+import type { CollectionPoint, WasteType, CollectionPointFormData, WasteTypeOption, CollectionPointFormProps } from '../../../types';
 import './CollectionPointForm.css';
-
-interface CollectionPointFormProps {
-  initialData?: Partial<CollectionPoint>;
-  isEditing?: boolean;
-  className?: string;
-}
 
 const wasteTypeOptions: WasteTypeOption[] = [
   { value: 'Vidro', label: 'Vidro', color: '#22c55e' },

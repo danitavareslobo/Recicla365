@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Icon } from '../';
 import './SuccessNotification.css';
-
-interface SuccessNotificationProps {
-  message: string;
-  duration?: number;
-  onClose?: () => void;
-  className?: string;
-}
+import type { SuccessNotificationProps } from '../../../types';
 
 export const SuccessNotification: React.FC<SuccessNotificationProps> = ({
   message,

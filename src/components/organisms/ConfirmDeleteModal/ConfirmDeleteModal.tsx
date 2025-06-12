@@ -2,15 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Button, Icon } from '../../atoms';
 import type { CollectionPoint } from '../../../types';
 import './ConfirmDeleteModal.css';
-
-interface ConfirmDeleteModalProps {
-  point: CollectionPoint | null;
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: (point: CollectionPoint) => void | Promise<void>;
-  isDeleting?: boolean;
-  className?: string;
-}
+import type { ConfirmDeleteModalProps } from '../../../types';
 
 export const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
   point,

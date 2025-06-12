@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Login, Register, Dashboard, CadastroLocal, LocaisColeta } from './pages';
+import NotFoundTemplate from './components/templates/NotFoundTemplate';
 import './styles/globals.css';
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -79,13 +80,7 @@ const App: React.FC = () => {
             
             <Route 
               path="*" 
-              element={
-                <div style={{ padding: '2rem', textAlign: 'center' }}>
-                  <h2>Página não encontrada</h2>
-                  <p>A página que você está procurando não existe.</p>
-                  <a href="/dashboard">Voltar ao Dashboard</a>
-                </div>
-              } 
+              element={<NotFoundTemplate />} 
             />
           </Routes>
         </AuthProvider>

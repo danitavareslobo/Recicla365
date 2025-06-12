@@ -3,19 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Typography, Icon } from '../../atoms';
 import { useAuth } from '../../../contexts/AuthContext';
 import './Navigation.css';
-
-interface NavigationItem {
-  id: string;
-  label: string;
-  path: string;
-  icon: 'sun' | 'moon' | 'user' | 'email' | 'password' | 'location' | 'trash' | 'edit' | 'plus' | 'search' | 'menu' | 'close' | 'recycle';
-  requiresAuth?: boolean;
-}
-
-interface NavigationProps {
-  className?: string;
-  variant?: 'horizontal' | 'vertical' | 'mobile';
-}
+import type { NavigationProps, NavigationItem } from '../../../types';
 
 const navigationItems: NavigationItem[] = [
   {

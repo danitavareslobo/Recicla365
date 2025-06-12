@@ -1,15 +1,7 @@
 import React from 'react';
 import { Typography } from '../../atoms';
 import './FormProgress.css';
-
-interface FormProgressProps {
-  percentage: number;
-  completed: number;
-  total: number;
-  showDetails?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-  className?: string;
-}
+import type { FormProgressProps } from '../../../types';
 
 export const FormProgress: React.FC<FormProgressProps> = ({
   percentage,

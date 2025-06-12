@@ -1,21 +1,8 @@
 import React, { useState } from 'react';
 import { Input, Typography, Icon } from '../../atoms';
 import { ViaCepService } from '../../../services';
-import type { ViaCepResponse } from '../../../types';
+import type { CepInputProps, ViaCepResponse } from '../../../types';
 import './CepInput.css';
-
-interface CepInputProps {
-  id?: string;
-  value?: string;
-  disabled?: boolean;
-  required?: boolean;
-  error?: boolean;
-  errorMessage?: string;
-  className?: string;
-  onAddressFound?: (address: ViaCepResponse) => void;
-  onCepChange?: (cep: string) => void;
-  onError?: (error: string) => void;
-}
 
 export const CepInput: React.FC<CepInputProps> = ({
   id,

@@ -1,17 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Button, Icon } from '../../atoms';
 import './SearchBox.css';
-
-interface SearchBoxProps {
-  placeholder?: string;
-  value?: string;
-  disabled?: boolean;
-  fullWidth?: boolean;
-  className?: string;
-  onSearch: (searchTerm: string) => void;
-  onClear?: () => void;
-  onChange?: (value: string) => void;
-}
+import type { SearchBoxProps } from '../../../types';
 
 export const SearchBox: React.FC<SearchBoxProps> = ({
   placeholder = 'Buscar...',

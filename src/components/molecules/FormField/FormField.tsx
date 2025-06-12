@@ -1,26 +1,7 @@
 import React from 'react';
 import { Input, Typography, Icon } from '../../atoms';
 import './FormField.css';
-
-interface FormFieldProps {
-  id?: string;
-  label: string;
-  type?: 'text' | 'email' | 'password' | 'tel' | 'date' | 'number';
-  placeholder?: string;
-  value?: string;
-  defaultValue?: string;
-  disabled?: boolean;
-  required?: boolean;
-  fullWidth?: boolean;
-  error?: boolean;
-  errorMessage?: string;
-  helperText?: string;
-  icon?: 'sun' | 'moon' | 'user' | 'email' | 'password' | 'location' | 'trash' | 'edit' | 'plus' | 'search' | 'menu' | 'close' | 'recycle';
-  className?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
-}
+import type { FormFieldProps } from '../../../types';
 
 export const FormField: React.FC<FormFieldProps> = ({
   id,

@@ -1,23 +1,6 @@
 import React from 'react';
 import './Input.css';
-
-interface InputProps {
-  id?: string;
-  type?: 'text' | 'email' | 'password' | 'tel' | 'date' | 'number';
-  placeholder?: string;
-  value?: string;
-  defaultValue?: string;
-  disabled?: boolean;
-  required?: boolean;
-  fullWidth?: boolean;
-  error?: boolean;
-  errorMessage?: string;
-  label?: string;
-  className?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
-}
+import type { InputProps } from '../../../types';
 
 export const Input: React.FC<InputProps> = ({
   id,
