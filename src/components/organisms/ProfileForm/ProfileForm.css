@@ -1,6 +1,5 @@
 .profile-form {
   width: 100%;
-  max-width: 800px;
   margin: 0 auto;
   background: var(--bg-primary);
   border-radius: var(--radius-lg);
