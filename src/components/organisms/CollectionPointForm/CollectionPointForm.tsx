@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Typography, Icon } from '../../atoms';
-import { FormField, FormProgress } from '../../molecules';
+import { FormField, FormProgress, LocationActions } from '../../molecules';
 import { useAuth } from '../../../contexts/AuthContext';
-import { ViaCepService, ValidationService, CollectionPointService } from '../../../services';
+import { ViaCepService, ValidationService, CollectionPointService, GeolocationService } from '../../../services';
 import { FormUtils } from '../../../utils';
-import type { CollectionPoint, WasteType, CollectionPointFormData, WasteTypeOption, CollectionPointFormProps } from '../../../types';
+import type { CollectionPoint, WasteType, CollectionPointFormData, WasteTypeOption, CollectionPointFormProps, GeolocationPosition } from '../../../types';
 import './CollectionPointForm.css';
 
 const wasteTypeOptions: WasteTypeOption[] = [
@@ -201,6 +201,29 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
       fetchAddressByCep(cleanCep);
     }
     handleBlur('cep')();
+  };
+
+  const handleLocationUpdate = (position: GeolocationPosition) => {
+    const formattedCoords = GeolocationService.formatCoordinates(position);
+    
+    setFormData(prev => ({
+      ...prev,
+      latitude: formattedCoords.latitude,
+      longitude: formattedCoords.longitude,
+    }));
+
+    setErrors(prev => {
+      const newErrors = { ...prev };
+      delete newErrors.latitude;
+      delete newErrors.longitude;
+      return newErrors;
+    });
+
+    setTouched(prev => ({
+      ...prev,
+      latitude: true,
+      longitude: true,
+    }));
   };
 
   const handleWasteToggle = (wasteType: WasteType) => {
@@ -534,45 +557,13 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
           />
         </div>
 
-        <div className="collection-point-form__section">
-          <Typography variant="h4" className="collection-point-form__section-title">
-            Coordenadas Geográficas
-          </Typography>
-
-          <div className="collection-point-form__row">
-            <FormField
-              id="latitude"
-              label="Latitude"
-              type="number"
-              placeholder="-26.3044"
-              value={formData.latitude}
-              onChange={handleInputChange('latitude')}
-              onBlur={handleBlur('latitude')}
-              error={!!errors.latitude}
-              errorMessage={errors.latitude}
-              helperText="Ex: -26.3044 (Sul: negativo, Norte: positivo)"
-              required
-              disabled={isLoading}
-              fullWidth
-            />
-
-            <FormField
-              id="longitude"
-              label="Longitude"
-              type="number"
-              placeholder="-48.5480"
-              value={formData.longitude}
-              onChange={handleInputChange('longitude')}
-              onBlur={handleBlur('longitude')}
-              error={!!errors.longitude}
-              errorMessage={errors.longitude}
-              helperText="Ex: -48.5480 (Oeste: negativo, Leste: positivo)"
-              required
-              disabled={isLoading}
-              fullWidth
-            />
-          </div>
-        </div>
+        <LocationActions
+            latitude={formData.latitude}
+            longitude={formData.longitude}
+            onLocationUpdate={handleLocationUpdate}
+            disabled={isLoading}
+            className="collection-point-form__location-actions"
+          />
 
         <div className="collection-point-form__section">
           <Typography variant="h4" className="collection-point-form__section-title">
