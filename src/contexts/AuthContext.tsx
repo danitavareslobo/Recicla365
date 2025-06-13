@@ -110,21 +110,33 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       );
 
       if (mockUserExists) {
-        throw new Error('Email ou CPF já cadastrado no sistema');
+      const emailExists = mockUsers.some(user => 
+        user.email.toLowerCase() === userData.email.toLowerCase()
+      );
+      const cpfExists = mockUsers.some(user => user.cpf === userData.cpf);
+      
+      if (emailExists) {
+        throw new Error('Email já cadastrado no sistema');
       }
+      if (cpfExists) {
+        throw new Error('CPF já cadastrado no sistema');
+      }
+    }
 
       const newUser = await UserService.createUser(userData);
       
       const userWithoutPassword = getUserWithoutPassword(newUser);
-      localStorage.setUser(userWithoutPassword);
-      localStorage.setToken(`token_${newUser.id}_${Date.now()}`);
-      setUser(newUser);
-      return true;
-    } catch (error) {
-      console.error('Erro no registro:', error);
-      throw error; 
-    }
-  };
+    localStorage.setUser(userWithoutPassword);
+    localStorage.setToken(`token_${newUser.id}_${Date.now()}`);
+    setUser(newUser);
+    return true;
+    
+  } catch (error) {
+    console.error('Erro no registro:', error);
+    
+    throw error;
+  }
+};
 
   const updateUser = async (userData: Partial<User>): Promise<boolean> => {
   if (!user?.id) {

@@ -8,7 +8,7 @@
 
 .register-page__form {
   width: 100%;
-  max-width: 480px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 2rem;
   background: var(--bg-primary);

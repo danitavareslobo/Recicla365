@@ -17,7 +17,7 @@
 }
 
 .theme-toggle-button:hover {
-  background: var(--bg-primary);
+  background: var(--accent);
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }

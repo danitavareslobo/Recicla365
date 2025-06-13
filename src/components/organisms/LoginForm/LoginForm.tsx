@@ -195,7 +195,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
       <div className="login-form__demo">
         <Typography variant="caption" color="secondary" align="center">
-          <strong>Demo:</strong> Use qualquer email válido e senha com 6+ caracteres
+          <strong>Para testar:</strong>  
+          <br />Use o email: pedro@joinville.com <br /> e a senha: pedro123
         </Typography>
       </div>
     </div>

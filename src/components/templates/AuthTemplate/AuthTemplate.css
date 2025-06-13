@@ -11,7 +11,7 @@
 .auth-template--gradient {
   background: linear-gradient(135deg, 
     var(--bg-primary) 0%, 
-    var(--bg-secondary) 50%, 
+    var(--border) 30%, 
     var(--bg-primary) 100%
   );
 }
@@ -92,8 +92,8 @@
   align-items: center;
   gap: var(--spacing-md);
   padding: var(--spacing-md);
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--text-primary);
   border-radius: var(--radius-md);
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
@@ -101,7 +101,7 @@
 
 .auth-template__feature:hover {
   transform: translateY(-2px);
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: var(--bg-secondary);
 }
 
 .auth-template__content {
@@ -109,7 +109,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--spacing-xl);
-  background-color: var(--bg-primary);
+  background-color: var(--border);
   border-left: 1px solid var(--border);
   overflow-y: auto;
 }
@@ -288,18 +288,18 @@
 [data-theme="dark"] .auth-template--gradient {
   background: linear-gradient(135deg, 
     var(--bg-primary) 0%, 
-    rgba(45, 45, 45, 0.8) 50%, 
+    var(--bg-secondary) 50%, 
     var(--bg-primary) 100%
   );
 }
 
 [data-theme="dark"] .auth-template__feature {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--bg-primary);
+  border-color: var(--text-secondary);
 }
 
 [data-theme="dark"] .auth-template__feature:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--bg-secondary);
 }
 
 @media (prefers-contrast: high) {
