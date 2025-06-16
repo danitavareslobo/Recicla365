@@ -1,0 +1,120 @@
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+}
+
+.loading-spinner--overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.loading-spinner__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  z-index: 1;
+  background: var(--bg-primary);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.loading-spinner:not(.loading-spinner--overlay) .loading-spinner__content {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+}
+
+.loading-spinner__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+
+.loading-spinner--sm .loading-spinner__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.loading-spinner--md .loading-spinner__icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.loading-spinner--lg .loading-spinner__icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.loading-spinner__svg {
+  width: 100%;
+  height: 100%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-spinner__message {
+  text-align: center;
+  max-width: 200px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+[data-theme="dark"] .loading-spinner__backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .loading-spinner__content {
+  background: var(--bg-primary);
+  border-color: var(--border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-contrast: high) {
+  .loading-spinner__content {
+    border-width: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner__svg {
+    animation: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .loading-spinner__content {
+    padding: var(--spacing-lg);
+    margin: var(--spacing-md);
+  }
+}

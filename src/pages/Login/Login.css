@@ -1,0 +1,36 @@
+.login-theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+}
+
+.theme-toggle-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease-in-out;
+}
+
+.theme-toggle-button:hover {
+  background: var(--accent);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .login-theme-toggle {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+  
+  .theme-toggle-button {
+    font-size: 0.75rem;
+    padding: 0.5rem;
+    gap: 0.25rem;
+  }
+}

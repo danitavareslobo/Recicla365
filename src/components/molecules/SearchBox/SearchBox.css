@@ -1,0 +1,112 @@
+.search-box {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: flex-end;
+}
+
+.search-box--full-width {
+  width: 100%;
+}
+
+.search-box--full-width .search-box__input-container {
+  flex: 1;
+}
+
+.search-box__input-container {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-box__input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-box__search-icon {
+  position: absolute;
+  left: var(--spacing-md);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.search-box__input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  padding-left: calc(var(--spacing-md) * 2 + 1.5rem) !important;
+  padding-right: var(--spacing-xl) !important;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-family: var(--font-family);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all 0.2s ease-in-out;
+  min-height: 2.5rem;
+}
+
+.search-box__input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+.search-box__input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.search-box__input:disabled {
+  background-color: var(--bg-secondary);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.search-box__clear-icon {
+  position: absolute;
+  right: var(--spacing-md);
+  z-index: 1;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.search-box__clear-icon:hover {
+  color: var(--accent);
+  transform: scale(1.1);
+}
+
+.search-box__button {
+  flex-shrink: 0;
+  min-width: auto;
+  white-space: nowrap;
+}
+
+.search-box--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .search-box {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .search-box__input-container {
+    width: 100%;
+  }
+  
+  .search-box__button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-box__button {
+    justify-content: center;
+  }
+  
+  .search-box__input {
+    font-size: var(--font-size-sm);
+  }
+}

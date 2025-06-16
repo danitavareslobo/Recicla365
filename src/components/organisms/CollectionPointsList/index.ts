@@ -1,0 +1,1 @@
+export { CollectionPointsList } from './CollectionPointsList';
