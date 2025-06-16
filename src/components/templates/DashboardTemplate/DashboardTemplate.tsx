@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Header, Navigation } from '../../organisms';
-import { Button, Icon } from '../../atoms';
+import { Button, Icon, Typography } from '../../atoms';
 import './DashboardTemplate.css';
 import type { DashboardTemplateProps } from '../../../types';
 
@@ -94,6 +94,12 @@ export const DashboardTemplate: React.FC<DashboardTemplateProps> = ({
           onClick={toggleSidebar}
         />
       )}
+
+      <footer className="dashboard-template__footer">
+              <Typography variant="caption" color="secondary" align="center">
+                © 2025 Recicla365. Construindo um futuro mais sustentável. Criado por <a href='https://www.linkedin.com/in/danitavareslobo/' target="_blank">Daniele Tavares Lobo</a>
+              </Typography>
+            </footer>
     </div>
   );
 };
