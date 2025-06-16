@@ -96,7 +96,7 @@ export const Dashboard: React.FC = () => {
           value: totalPoints,
           subtitle: `Em ${totalCities} cidade${totalCities !== 1 ? 's' : ''}`,
           icon: 'location',
-          variant: 'highlight',
+          variant: 'stats',
           trend: {
             direction: recentPoints > 0 ? 'up' : 'neutral',
             value: recentPoints > 0 ? `+${recentPoints}` : '0',
