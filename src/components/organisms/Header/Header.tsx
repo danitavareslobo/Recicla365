@@ -25,11 +25,12 @@ export const Header: React.FC<HeaderProps> = ({ className = '' }) => {
       <div className="header__container">
         <div className="header__brand">
           <div className="header__logo">
-            <Icon name="recycle" size="lg" color="accent" />
+            <img 
+              src="/recicla365-logo.png" 
+              alt="Recicla365 Logo" 
+              className="header__logo-image"
+            />
           </div>
-          <Typography variant="h4" weight="bold" className="header__title">
-            Recicla365
-          </Typography>
         </div>
 
         <div className="header__actions">

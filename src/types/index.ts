@@ -164,5 +164,24 @@ export interface UserRegistrationData {
   address: Address;
 }
 
+export interface GeolocationPosition {
+  latitude: number;
+  longitude: number;
+  accuracy?: number;
+}
+
+export interface GeolocationError {
+  code: number;
+  message: string;
+}
+
+export interface LocationActionsProps {
+  latitude: string;
+  longitude: string;
+  onLocationUpdate: (position: GeolocationPosition) => void;
+  disabled?: boolean;
+  className?: string;
+}
+
 export * from './component';
 export * from './form';

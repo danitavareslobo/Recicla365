@@ -210,52 +210,57 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     setCurrentStep(1);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  
+  if (!validateStep2()) {
+    return;
+  }
+
+  setIsLoading(true);
+  setErrors({}); // Limpar erros anteriores
+
+  try {
+    const userData: Omit<User, 'id' | 'createdAt'> = {
+      name: formData.name.trim(),
+      email: formData.email,
+      cpf: formData.cpf,
+      gender: formData.gender,
+      birthDate: formData.birthDate,
+      password: formData.password,
+      address: {
+        cep: formData.cep,
+        street: formData.street,
+        number: formData.number,
+        complement: formData.complement || undefined,
+        neighborhood: formData.neighborhood,
+        city: formData.city,
+        state: formData.state,
+        uf: formData.state.split(' ')[0], 
+      },
+    };
+
+    await register(userData);
+    navigate('/dashboard');
     
-    if (!validateStep2()) {
-      return;
+  } catch (error) {
+    console.error('Erro no registro:', error);
+    
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
+    
+    if (errorMessage.toLowerCase().includes('cpf já cadastrado')) {
+      setErrors({ cpf: 'CPF já cadastrado no sistema' });
+      setCurrentStep(1); 
+    } else if (errorMessage.toLowerCase().includes('email já cadastrado')) {
+      setErrors({ email: 'Email já cadastrado no sistema' });
+      setCurrentStep(1); 
+    } else {
+      setErrors({ general: errorMessage });
     }
-
-    setIsLoading(true);
-
-    try {
-      const userData: Omit<User, 'id' | 'createdAt'> = {
-        name: formData.name.trim(),
-        email: formData.email,
-        cpf: formData.cpf,
-        gender: formData.gender,
-        birthDate: formData.birthDate,
-        password: formData.password,
-        address: {
-          cep: formData.cep,
-          street: formData.street,
-          number: formData.number,
-          complement: formData.complement || undefined,
-          neighborhood: formData.neighborhood,
-          city: formData.city,
-          state: formData.state,
-          uf: formData.state.split(' ')[0], 
-        },
-      };
-
-      const success = await register(userData);
-      
-      if (success) {
-        navigate('/dashboard');
-      } else {
-        setErrors({
-          general: 'Erro ao criar conta. Tente novamente.',
-        });
-      }
-    } catch (error) {
-      setErrors({
-        general: 'Erro ao criar conta. Tente novamente mais tarde.',
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   const formClasses = [
     'register-form',

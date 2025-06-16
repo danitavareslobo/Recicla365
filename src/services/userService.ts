@@ -1,4 +1,5 @@
 import type { User, UserStats, UserValidation } from '../types';
+import { mockUsers } from '../data/users'; 
 
 export class UserService {
   private static readonly STORAGE_KEY = '@ecopontos:registered_users';
@@ -6,11 +7,17 @@ export class UserService {
   static async getAllUsers(): Promise<User[]> {
     await new Promise(resolve => setTimeout(resolve, 300));
     
-    return this.getFromStorage();
+    const registeredUsers = this.getFromStorage();
+    return [...mockUsers, ...registeredUsers];
   }
 
   static async getUserById(id: string): Promise<User | null> {
     await new Promise(resolve => setTimeout(resolve, 200));
+    
+    const mockUser = mockUsers.find(user => user.id === id);
+    if (mockUser) {
+      return mockUser;
+    }
     
     const users = this.getFromStorage();
     return users.find(user => user.id === id) || null;
@@ -19,14 +26,14 @@ export class UserService {
   static async createUser(userData: Omit<User, 'id' | 'createdAt'>): Promise<User> {
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    const existingUsers = this.getFromStorage();
+    const allUsers = await this.getAllUsers();
     
-    const cpfExists = existingUsers.some(user => user.cpf === userData.cpf);
+    const cpfExists = allUsers.some(user => user.cpf === userData.cpf);
     if (cpfExists) {
       throw new Error('CPF já cadastrado no sistema');
     }
 
-    const emailExists = existingUsers.some(user => user.email.toLowerCase() === userData.email.toLowerCase());
+    const emailExists = allUsers.some(user => user.email.toLowerCase() === userData.email.toLowerCase());
     if (emailExists) {
       throw new Error('Email já cadastrado no sistema');
     }
@@ -44,6 +51,31 @@ export class UserService {
   static async updateUser(id: string, userData: Partial<Omit<User, 'id' | 'createdAt'>>): Promise<User> {
     await new Promise(resolve => setTimeout(resolve, 500));
 
+    const mockUser = mockUsers.find(user => user.id === id);
+    if (mockUser) {
+      const updatedMockUser = { ...mockUser, ...userData };
+      
+      const allUsers = await this.getAllUsers();
+      
+      if (userData.cpf) {
+        const cpfExists = allUsers.some(user => user.id !== id && user.cpf === userData.cpf);
+        if (cpfExists) {
+          throw new Error('CPF já cadastrado no sistema');
+        }
+      }
+
+      if (userData.email) {
+        const emailExists = allUsers.some(user => 
+          user.id !== id && user.email.toLowerCase() === userData.email!.toLowerCase()
+        );
+        if (emailExists) {
+          throw new Error('Email já cadastrado no sistema');
+        }
+      }
+      
+      return updatedMockUser;
+    }
+
     const users = this.getFromStorage();
     const userIndex = users.findIndex(user => user.id === id);
 
@@ -52,14 +84,16 @@ export class UserService {
     }
 
     if (userData.cpf) {
-      const cpfExists = users.some(user => user.id !== id && user.cpf === userData.cpf);
+      const allUsers = await this.getAllUsers();
+      const cpfExists = allUsers.some(user => user.id !== id && user.cpf === userData.cpf);
       if (cpfExists) {
         throw new Error('CPF já cadastrado no sistema');
       }
     }
 
     if (userData.email) {
-      const emailExists = users.some(user => 
+      const allUsers = await this.getAllUsers();
+      const emailExists = allUsers.some(user => 
         user.id !== id && user.email.toLowerCase() === userData.email!.toLowerCase()
       );
       if (emailExists) {
@@ -77,6 +111,12 @@ export class UserService {
   static async deleteUser(id: string): Promise<void> {
     await new Promise(resolve => setTimeout(resolve, 400));
 
+    // Não permitir deletar mockUsers
+    const mockUser = mockUsers.find(user => user.id === id);
+    if (mockUser) {
+      throw new Error('Não é possível deletar usuários do sistema');
+    }
+
     const users = this.getFromStorage();
     const filteredUsers = users.filter(user => user.id !== id);
 
@@ -90,14 +130,14 @@ export class UserService {
   static async searchUsers(query: string): Promise<User[]> {
     await new Promise(resolve => setTimeout(resolve, 300));
 
-    const users = this.getFromStorage();
+    const allUsers = await this.getAllUsers();
     const lowercaseQuery = query.toLowerCase().trim();
 
     if (!lowercaseQuery) {
-      return users;
+      return allUsers;
     }
 
-    return users.filter(user =>
+    return allUsers.filter(user =>
       user.name.toLowerCase().includes(lowercaseQuery) ||
       user.email.toLowerCase().includes(lowercaseQuery) ||
       user.cpf.includes(query.replace(/\D/g, '')) ||
@@ -108,8 +148,8 @@ export class UserService {
   static async getUsersByCity(city: string): Promise<User[]> {
     await new Promise(resolve => setTimeout(resolve, 250));
 
-    const users = this.getFromStorage();
-    return users.filter(user => 
+    const allUsers = await this.getAllUsers();
+    return allUsers.filter(user => 
       user.address.city.toLowerCase() === city.toLowerCase()
     );
   }
@@ -117,8 +157,8 @@ export class UserService {
   static async getRecentUsers(limit: number = 10): Promise<User[]> {
     await new Promise(resolve => setTimeout(resolve, 200));
 
-    const users = this.getFromStorage();
-    return users
+    const allUsers = await this.getAllUsers();
+    return allUsers
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       .slice(0, limit);
   }
@@ -126,29 +166,30 @@ export class UserService {
   static async getUserStats(): Promise<UserStats> {
     await new Promise(resolve => setTimeout(resolve, 300));
 
-    const users = this.getFromStorage();
+    const allUsers = await this.getAllUsers();
+    const registeredUsers = this.getFromStorage();
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    const recentUsers = users.filter(user => {
+    const recentUsers = allUsers.filter(user => {
       const userDate = new Date(user.createdAt);
       return userDate >= thirtyDaysAgo;
     });
 
-    const uniqueCities = new Set(users.map(user => user.address.city));
+    const uniqueCities = new Set(allUsers.map(user => user.address.city));
     
-    const genderDistribution = users.reduce((acc, user) => {
+    const genderDistribution = allUsers.reduce((acc, user) => {
       acc[user.gender] = (acc[user.gender] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
 
     return {
-      total: users.length,
+      total: allUsers.length,
       recentCount: recentUsers.length,
       citiesCount: uniqueCities.size,
       genderDistribution,
-      mockUsersCount: 0,
-      registeredUsersCount: users.length,
+      mockUsersCount: mockUsers.length,
+      registeredUsersCount: registeredUsers.length,
     };
   }
 
@@ -192,9 +233,9 @@ export class UserService {
     userData: { cpf: string; email: string }, 
     excludeId?: string
   ): Promise<UserValidation> {
-    const users = this.getFromStorage();
+    const allUsers = await this.getAllUsers();
     
-    const cpfDuplicate = users.find(user => {
+    const cpfDuplicate = allUsers.find(user => {
       return user.cpf === userData.cpf && (!excludeId || user.id !== excludeId);
     });
 
@@ -206,7 +247,7 @@ export class UserService {
       };
     }
 
-    const emailDuplicate = users.find(user => {
+    const emailDuplicate = allUsers.find(user => {
       return user.email.toLowerCase() === userData.email.toLowerCase() && 
              (!excludeId || user.id !== excludeId);
     });

@@ -4,7 +4,7 @@ export const testRegistrationData = {
   validUser: {
     name: 'João da Silva',
     email: 'joao.teste@email.com',
-    cpf: '123.456.789-00',
+    cpf: '123.456.789-09', 
     gender: 'M' as const,
     birthDate: '1990-05-15',
     password: 'senha123456',
@@ -21,7 +21,7 @@ export const testRegistrationData = {
   validUser2: {
     name: 'Maria Fernanda Santos',
     email: 'maria.teste@email.com',
-    cpf: '987.654.321-11',
+    cpf: '987.654.321-00', 
     gender: 'F' as const,
     birthDate: '1985-12-03',
     password: 'minhasenha123',

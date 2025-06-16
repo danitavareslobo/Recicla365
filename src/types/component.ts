@@ -1,6 +1,6 @@
 import type { CollectionPoint, ViaCepResponse, User, RegisterFormData, Theme } from './index';
 
-export type IconName = 'sun' | 'moon' | 'user' | 'email' | 'password' | 'location' | 'trash' | 'edit' | 'plus' | 'search' | 'menu' | 'close' | 'recycle' | 'info' | 'check' | 'refresh' | 'arrow-left';
+export type IconName = 'sun' | 'moon' | 'user' | 'email' | 'password' | 'location' | 'location-crosshairs' | 'external-link' | 'trash' | 'edit' | 'plus' | 'search' | 'menu' | 'close' | 'recycle' | 'info' | 'check' | 'refresh' | 'arrow-left';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'danger' | 'ghost';
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -316,4 +316,15 @@ export interface AuthProviderProps {
 
 export interface ThemeProviderProps {
   children: React.ReactNode;
+}
+
+export interface GeolocationPosition {
+  latitude: number;
+  longitude: number;
+  accuracy?: number;
+}
+
+export interface GeolocationError {
+  code: number;
+  message: string;
 }
