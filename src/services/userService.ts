@@ -264,14 +264,14 @@ export class UserService {
   }
 
   static async initializeWithMockData(mockUsers: User[]): Promise<void> {
-    const existingUsers = this.getFromStorage();
-    
-    if (existingUsers.length === 0) {
-      console.log('Inicializando sistema com dados mock...');
-    } else {
-      console.log(`Sistema já possui ${existingUsers.length} usuários cadastrados`);
-    }
+  const existingUsers = this.getFromStorage();
+  
+  if (existingUsers.length === 0) {
+    console.log(`Inicializando sistema com ${mockUsers.length} dados mock...`);
+  } else {
+    console.log(`Sistema já possui ${existingUsers.length} usuários cadastrados`);
   }
+}
 
   static async getRegisteredUsers(): Promise<User[]> {
     await new Promise(resolve => setTimeout(resolve, 200));

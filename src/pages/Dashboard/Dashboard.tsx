@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Typography, Icon } from '../../components/atoms';
 import { DashboardStats, CollectionPointsList } from '../../components/organisms';
 import { DashboardTemplate } from '../../components/templates';
