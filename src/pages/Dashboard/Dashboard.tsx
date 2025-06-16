@@ -11,11 +11,9 @@ import { mockUsers } from '../../data';
 import './Dashboard.css';
 
 export const Dashboard: React.FC = () => {
-  const navigate = useNavigate();
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [collectionPoints, setCollectionPoints] = useState<CollectionPoint[]>([]);
-  const [allCollectionPoints, setAllCollectionPoints] = useState<CollectionPoint[]>([]);
   const [stats, setStats] = useState<StatCard[]>([]);
 
   useEffect(() => {
@@ -27,8 +25,7 @@ export const Dashboard: React.FC = () => {
     
     try {
       const allPoints = await CollectionPointService.getAllCollectionPoints();
-      setAllCollectionPoints(allPoints);
-      
+            
       const recentPoints = allPoints
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
         .slice(0, 6);
