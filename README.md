@@ -10,7 +10,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.3.5-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 
-[🚀 Ver Demonstração](https://recicla365.vercel.app) -- A ajustar
+[🚀 Ver Demonstração](https://recicla365-zeta.vercel.app)
 
 </div>
 
@@ -176,6 +176,7 @@ Seguimos uma estratégia organizada de branches para cada funcionalidade:
 main                         # 🚀 Branch principal (produção estável)
 ├── develop                  # 🔄 Branch de desenvolvimento (integração)
 ├── fix/teste-fluxo          # 🐛 Correções de fluxo e testes
+├── fix/erros-build          # 🐞 Correções de erros do build
 ├── feat/perfil              # 👤 Funcionalidades do perfil de usuário
 ├── feat/componentes         # 🧩 Desenvolvimento de componentes base
 ├── feat/dashboard           # 📊 Painel principal com estatísticas
