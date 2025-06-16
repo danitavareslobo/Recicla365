@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Button, Icon } from '../../atoms';
+import { Button, Icon } from '../../atoms';
 import './SearchBox.css';
 import type { SearchBoxProps } from '../../../types';
 

@@ -1,5 +1,3 @@
-import type { User } from './index';
-
 export interface LoginFormData {
   email: string;
   password: string;
