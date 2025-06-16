@@ -182,6 +182,11 @@ export interface LocationActionsProps {
   disabled?: boolean;
   className?: string;
 }
+export interface TestResult {
+  passed: boolean;
+  message: string;
+  details?: any;
+}
 
 export * from './component';
 export * from './form';

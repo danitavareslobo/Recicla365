@@ -5,7 +5,7 @@ import { FormField, FormProgress, LocationActions } from '../../molecules';
 import { useAuth } from '../../../contexts/AuthContext';
 import { ViaCepService, ValidationService, CollectionPointService, GeolocationService } from '../../../services';
 import { FormUtils } from '../../../utils';
-import type { CollectionPoint, WasteType, CollectionPointFormData, WasteTypeOption, CollectionPointFormProps, GeolocationPosition } from '../../../types';
+import type { WasteType, CollectionPointFormData, WasteTypeOption, CollectionPointFormProps, GeolocationPosition } from '../../../types';
 import './CollectionPointForm.css';
 
 const wasteTypeOptions: WasteTypeOption[] = [
