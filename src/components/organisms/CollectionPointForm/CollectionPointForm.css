@@ -442,3 +442,193 @@
 .collection-point-form__location-actions + * {
   margin-top: var(--spacing-lg);
 }
+
+.collection-point-form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--border);
+}
+
+.collection-point-form__grid:last-of-type {
+  border-bottom: none;
+  margin-bottom: var(--spacing-lg);
+}
+
+.collection-point-form__grid .collection-point-form__section {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.collection-point-form__responsible {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.collection-point-form__responsible-info {
+  margin-top: var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.collection-point-form__coordinates-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.collection-point-form__waste-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.collection-point-form__waste-option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.collection-point-form__waste-option:hover {
+  background: var(--bg-secondary);
+  border-color: var(--accent);
+}
+
+.collection-point-form__waste-checkbox {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.collection-point-form__waste-checkbox:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.collection-point-form__waste-checkbox:checked::after {
+  content: '✓';
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.collection-point-form__waste-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.collection-point-form__location-actions {
+  margin-top: var(--spacing-md);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+}
+
+@media (max-width: 1200px) {
+  .collection-point-form__grid {
+    gap: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 968px) {
+  .collection-point-form__grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+  
+  .collection-point-form__coordinates-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .collection-point-form__waste-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .collection-point-form__grid {
+    gap: var(--spacing-md);
+  }
+  
+  .collection-point-form__waste-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.collection-point-form__waste-option:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.collection-point-form__waste-checkbox:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .collection-point-form__responsible {
+  background-color: var(--bg-tertiary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .collection-point-form__waste-option {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .collection-point-form__waste-option:hover {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .collection-point-form__waste-checkbox {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .collection-point-form__location-actions {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+.collection-point-form__section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-primary);
+  border-left: 3px solid var(--accent);
+  padding-left: var(--spacing-sm);
+}
+
+.collection-point-form__section-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.4;
+}

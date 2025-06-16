@@ -354,56 +354,57 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
     .filter(Boolean)
     .join(' ');
 
-  return (
-    <div className={formClasses}>
-      <div className="collection-point-form__header">
-        <div className="collection-point-form__icon">
-          <Icon name={isEditing ? 'edit' : 'plus'} size="xl" color="accent" />
-        </div>
-        <Typography variant="h2" align="center" className="collection-point-form__title">
-          {isEditing ? 'Editar Local de Coleta' : 'Cadastrar Local de Coleta'}
-        </Typography>
-        <Typography variant="body1" color="secondary" align="center" className="collection-point-form__subtitle">
-          {isEditing 
-            ? 'Atualize as informações do ponto de coleta'
-            : 'Adicione um novo ponto de coleta de resíduos'
-          }
+return (
+  <div className={formClasses}>
+    <div className="collection-point-form__header">
+      <div className="collection-point-form__icon">
+        <Icon name={isEditing ? 'edit' : 'plus'} size="xl" color="accent" />
+      </div>
+      <Typography variant="h2" align="center" className="collection-point-form__title">
+        {isEditing ? 'Editar Local de Coleta' : 'Cadastrar Local de Coleta'}
+      </Typography>
+      <Typography variant="body1" color="secondary" align="center" className="collection-point-form__subtitle">
+        {isEditing 
+          ? 'Atualize as informações do ponto de coleta'
+          : 'Adicione um novo ponto de coleta de resíduos'
+        }
+      </Typography>
+    </div>
+
+    <div className="collection-point-form__user-info">
+      <div className="collection-point-form__user-badge">
+        <Icon name="user" size="sm" color="accent" />
+        <Typography variant="body2" weight="medium">
+          Responsável: {user?.name}
         </Typography>
       </div>
+    </div>
 
-      <div className="collection-point-form__user-info">
-        <div className="collection-point-form__user-badge">
-          <Icon name="user" size="sm" color="accent" />
-          <Typography variant="body2" weight="medium">
-            Responsável: {user?.name}
+    <FormProgress
+      percentage={formProgress.percentage}
+      completed={formProgress.completed}
+      total={formProgress.total}
+      className="collection-point-form__progress"
+    />
+
+    <form className="collection-point-form__form" onSubmit={handleSubmit}>
+      {(errors.general || saveSuccess) && (
+        <div className={`collection-point-form__status-banner ${saveSuccess ? 'collection-point-form__status-banner--success' : 'collection-point-form__status-banner--error'}`}>
+          <Icon 
+            name={saveSuccess ? 'recycle' : 'close'} 
+            size="sm" 
+            color={saveSuccess ? 'success' : 'error'} 
+          />
+          <Typography variant="body2" color={saveSuccess ? 'success' : 'error'}>
+            {saveSuccess 
+              ? (isEditing ? 'Ponto atualizado com sucesso!' : 'Ponto cadastrado com sucesso!')
+              : errors.general
+            }
           </Typography>
         </div>
-      </div>
+      )}
 
-      <FormProgress
-        percentage={formProgress.percentage}
-        completed={formProgress.completed}
-        total={formProgress.total}
-        className="collection-point-form__progress"
-      />
-
-      <form className="collection-point-form__form" onSubmit={handleSubmit}>
-        {(errors.general || saveSuccess) && (
-          <div className={`collection-point-form__status-banner ${saveSuccess ? 'collection-point-form__status-banner--success' : 'collection-point-form__status-banner--error'}`}>
-            <Icon 
-              name={saveSuccess ? 'recycle' : 'close'} 
-              size="sm" 
-              color={saveSuccess ? 'success' : 'error'} 
-            />
-            <Typography variant="body2" color={saveSuccess ? 'success' : 'error'}>
-              {saveSuccess 
-                ? (isEditing ? 'Ponto atualizado com sucesso!' : 'Ponto cadastrado com sucesso!')
-                : errors.general
-              }
-            </Typography>
-          </div>
-        )}
-
+      <div className="collection-point-form__grid">
         <div className="collection-point-form__section">
           <Typography variant="h4" className="collection-point-form__section-title">
             Informações Básicas
@@ -427,12 +428,12 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
           <div className="collection-point-form__field">
             <Typography variant="body2" weight="medium" className="collection-point-form__label">
               <Icon name="edit" size="sm" className="collection-point-form__label-icon" />
-              Descrição
+              Descrição do Local
               <span className="collection-point-form__required">*</span>
             </Typography>
             <textarea
               id="description"
-              placeholder="Descreva o ponto de coleta, horários de funcionamento, informações relevantes..."
+              placeholder="Descreva o local de coleta, horários de funcionamento, observações importantes..."
               value={formData.description}
               onChange={handleInputChange('description')}
               onBlur={handleBlur('description')}
@@ -449,11 +450,25 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
               </div>
             )}
           </div>
+
+          <div className="collection-point-form__responsible">
+            <Typography variant="body2" weight="medium" className="collection-point-form__label">
+              Responsável pelo Cadastro
+            </Typography>
+            <div className="collection-point-form__responsible-info">
+              <Typography variant="body2" color="secondary">
+                {user?.name}
+              </Typography>
+              <Typography variant="caption" color="secondary">
+                Este local será vinculado ao seu usuário
+              </Typography>
+            </div>
+          </div>
         </div>
 
         <div className="collection-point-form__section">
           <Typography variant="h4" className="collection-point-form__section-title">
-            Endereço
+            Localização
           </Typography>
 
           <FormField
@@ -475,7 +490,7 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
           <div className="collection-point-form__row">
             <FormField
               id="street"
-              label="Rua"
+              label="Logradouro"
               placeholder="Nome da rua"
               value={formData.street}
               onChange={handleInputChange('street')}
@@ -556,41 +571,27 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
             fullWidth
           />
         </div>
+      </div>
 
-        <LocationActions
-            latitude={formData.latitude}
-            longitude={formData.longitude}
-            onLocationUpdate={handleLocationUpdate}
-            disabled={isLoading}
-            className="collection-point-form__location-actions"
-          />
-
+      <div className="collection-point-form__grid">
         <div className="collection-point-form__section">
           <Typography variant="h4" className="collection-point-form__section-title">
             Tipos de Resíduos Aceitos
           </Typography>
           <Typography variant="body2" color="secondary" className="collection-point-form__section-subtitle">
-            Selecione quais tipos de materiais são aceitos neste ponto de coleta
+            Selecione os tipos de materiais recicláveis que este local aceita
           </Typography>
 
           <div className="collection-point-form__waste-grid">
             {wasteTypeOptions.map((waste) => (
-              <button
-                key={waste.value}
-                type="button"
-                onClick={() => handleWasteToggle(waste.value)}
-                disabled={isLoading}
-                className={`collection-point-form__waste-option ${
-                  formData.acceptedWastes.includes(waste.value) 
-                    ? 'collection-point-form__waste-option--selected' 
-                    : ''
-                }`}
-                style={{
-                  borderColor: formData.acceptedWastes.includes(waste.value) ? waste.color : undefined,
-                  backgroundColor: formData.acceptedWastes.includes(waste.value) ? `${waste.color}15` : undefined,
-                  color: formData.acceptedWastes.includes(waste.value) ? waste.color : undefined,
-                }}
-              >
+              <label key={waste.value} className="collection-point-form__waste-option">
+                <input
+                  type="checkbox"
+                  checked={formData.acceptedWastes.includes(waste.value)}
+                  onChange={() => handleWasteToggle(waste.value)}
+                  disabled={isLoading}
+                  className="collection-point-form__waste-checkbox"
+                />
                 <div
                   className="collection-point-form__waste-indicator"
                   style={{ backgroundColor: waste.color }}
@@ -598,7 +599,7 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
                 <Typography variant="body2" weight="medium">
                   {waste.label}
                 </Typography>
-              </button>
+              </label>
             ))}
           </div>
 
@@ -612,37 +613,89 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
           )}
         </div>
 
-        <div className="collection-point-form__actions">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleCancel}
-            disabled={isLoading}
-            fullWidth
-          >
-            Cancelar
-          </Button>
+        <div className="collection-point-form__section">
+          <Typography variant="h4" className="collection-point-form__section-title">
+            Coordenadas Geográficas
+          </Typography>
+          <Typography variant="body2" color="secondary" className="collection-point-form__section-subtitle">
+            Adicione as coordenadas para localização precisa no mapa (opcional)
+          </Typography>
 
-          <Button
-            type="submit"
-            variant="primary"
+          <div className="collection-point-form__coordinates-row">
+            <FormField
+              id="latitude"
+              label="Latitude"
+              type="number"
+              placeholder="-26.3044"
+              value={formData.latitude}
+              onChange={handleInputChange('latitude')}
+              onBlur={handleBlur('latitude')}
+              error={!!errors.latitude}
+              errorMessage={errors.latitude}
+              helperText="Ex: -26.3044 (Sul: negativo, Norte: positivo)"
+              required
+              disabled={isLoading}
+              fullWidth
+            />
+
+            <FormField
+              id="longitude"
+              label="Longitude"
+              type="number"
+              placeholder="-48.5480"
+              value={formData.longitude}
+              onChange={handleInputChange('longitude')}
+              onBlur={handleBlur('longitude')}
+              error={!!errors.longitude}
+              errorMessage={errors.longitude}
+              helperText="Ex: -48.5480 (Oeste: negativo, Leste: positivo)"
+              required
+              disabled={isLoading}
+              fullWidth
+            />
+          </div>
+
+          <LocationActions
+            latitude={formData.latitude}
+            longitude={formData.longitude}
+            onLocationUpdate={handleLocationUpdate}
             disabled={isLoading}
-            fullWidth
-          >
-            {isLoading ? (
-              <>
-                <Icon name="recycle" size="sm" />
-                {isEditing ? 'Salvando...' : 'Cadastrando...'}
-              </>
-            ) : (
-              <>
-                <Icon name={isEditing ? 'edit' : 'plus'} size="sm" />
-                {isEditing ? 'Salvar Alterações' : 'Cadastrar Local'}
-              </>
-            )}
-          </Button>
+            className="collection-point-form__location-actions"
+          />
         </div>
-      </form>
-    </div>
-  );
+      </div>
+
+      <div className="collection-point-form__actions">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleCancel}
+          disabled={isLoading}
+          fullWidth
+        >
+          Cancelar
+        </Button>
+
+        <Button
+          type="submit"
+          variant="primary"
+          disabled={isLoading}
+          fullWidth
+        >
+          {isLoading ? (
+            <>
+              <Icon name="recycle" size="sm" />
+              {isEditing ? 'Salvando...' : 'Cadastrando...'}
+            </>
+          ) : (
+            <>
+              <Icon name={isEditing ? 'edit' : 'plus'} size="sm" />
+              {isEditing ? 'Salvar Alterações' : 'Cadastrar Local'}
+            </>
+          )}
+        </Button>
+      </div>
+    </form>
+  </div>
+);
 };
