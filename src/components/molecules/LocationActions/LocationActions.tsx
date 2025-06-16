@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Typography, Icon } from '../../atoms';
 import { GeolocationService } from '../../../services';
-import type { GeolocationPosition, LocationActionsProps } from '../../../types';
+import type { LocationActionsProps } from '../../../types';
 import './LocationActions.css';
 
 export const LocationActions: React.FC<LocationActionsProps> = ({
