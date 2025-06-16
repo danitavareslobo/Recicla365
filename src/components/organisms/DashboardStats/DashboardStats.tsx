@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography, Icon } from '../../atoms';
 import { Card } from '../../molecules';
 import './DashboardStats.css';
-import type { DashboardStatsProps, StatCard } from '../../../types';
+import type { DashboardStatsProps } from '../../../types';
 
 export const DashboardStats: React.FC<DashboardStatsProps> = ({
   stats = [],

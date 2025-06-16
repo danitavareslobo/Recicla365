@@ -1,4 +1,4 @@
-import type { CollectionPoint, CollectionPointFormData, Address, CreateCollectionPointData } from '../types';
+import type { CollectionPoint, CollectionPointFormData } from '../types';
 import { mockCollectionPoints } from '../data';
 
 export class CollectionPointService {

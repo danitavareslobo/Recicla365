@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Typography, Icon } from '../../atoms';
 import { ViaCepService } from '../../../services';
-import type { CepInputProps, ViaCepResponse } from '../../../types';
+import type { CepInputProps } from '../../../types';
 import './CepInput.css';
 
 export const CepInput: React.FC<CepInputProps> = ({

@@ -1,4 +1,4 @@
-import type { GeolocationPosition, GeolocationError } from "../types";
+import type { GeolocationPosition } from "../types";
 
 export class GeolocationService {
   private static readonly TIMEOUT_MS = 15000;

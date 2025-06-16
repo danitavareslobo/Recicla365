@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button, Typography, Icon } from '../../atoms';
+import { Button, Icon } from '../../atoms';
 import { useAuth } from '../../../contexts/AuthContext';
 import './Navigation.css';
 import type { NavigationProps, NavigationItem } from '../../../types';

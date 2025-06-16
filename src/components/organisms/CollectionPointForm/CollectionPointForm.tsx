@@ -5,7 +5,7 @@ import { FormField, FormProgress, LocationActions } from '../../molecules';
 import { useAuth } from '../../../contexts/AuthContext';
 import { ViaCepService, ValidationService, CollectionPointService, GeolocationService } from '../../../services';
 import { FormUtils } from '../../../utils';
-import type { CollectionPoint, WasteType, CollectionPointFormData, WasteTypeOption, CollectionPointFormProps, GeolocationPosition } from '../../../types';
+import type { WasteType, CollectionPointFormData, WasteTypeOption, CollectionPointFormProps, GeolocationPosition } from '../../../types';
 import './CollectionPointForm.css';
 
 const wasteTypeOptions: WasteTypeOption[] = [
@@ -305,16 +305,14 @@ export const CollectionPointForm: React.FC<CollectionPointFormProps> = ({
         return;
       }
 
-      let savedPoint: CollectionPoint;
-
       if (isEditing && initialData?.id) {
-        savedPoint = await CollectionPointService.updateCollectionPoint(
+        await CollectionPointService.updateCollectionPoint(
           initialData.id,
           formData,
           user.id
         );
       } else {
-        savedPoint = await CollectionPointService.createCollectionPoint(
+        await CollectionPointService.createCollectionPoint(
           formData,
           user.id
         );

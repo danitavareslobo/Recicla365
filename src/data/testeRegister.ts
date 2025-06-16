@@ -1,5 +1,3 @@
-import type { User } from '../types';
-
 export const testRegistrationData = {
   validUser: {
     name: 'João da Silva',
