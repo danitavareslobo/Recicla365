@@ -349,3 +349,26 @@
     min-height: auto;
   }
 }
+
+.auth-template__logo-image {
+  width: 400px;
+  object-fit: contain;
+  transition: all 0.2s ease;
+}
+
+.auth-template__branding:hover .auth-template__logo-image {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+@media (max-width: 768px) {
+  .auth-template__logo-image {
+    width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-template__logo-image {
+    width: 80px;
+  }
+}

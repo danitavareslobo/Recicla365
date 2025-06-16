@@ -25,10 +25,11 @@ export const AuthTemplate: React.FC<AuthTemplateProps> = ({
         {showBranding && (
           <div className="auth-template__branding">
             <div className="auth-template__logo">
-              <Icon name="recycle" size="xl" color="accent" />
-              <Typography variant="h1" weight="bold" className="auth-template__brand-name">
-                Recicla365
-              </Typography>
+              <img 
+              src="/recicla365-logo.png" 
+              alt="Recicla365 Logo" 
+              className="auth-template__logo-image"
+            />
             </div>
             
             <div className="auth-template__brand-content">
